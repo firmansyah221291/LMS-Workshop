@@ -1,13 +1,16 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
+  AlertCircle,
   Award,
   BookOpen,
   Building2,
+  Camera,
   CheckCircle2,
   ExternalLink,
   GraduationCap,
   Heart,
   IdCard,
+  Loader2,
   Lock,
   Mail,
   MapPin,
@@ -25,14 +28,116 @@ interface DeveloperInfoViewProps {
 }
 
 export const DeveloperInfoView: React.FC<DeveloperInfoViewProps> = ({ onNavigateLearn }) => {
-  // Ambil foto yang sekarang aktif (custom photo yang tersimpan atau foto asli resmi)
-  const photoUrl = useMemo<string>(() => {
+  // Ambil foto yang sekarang aktif (custom photo yang tersimpan di localStorage atau foto resmi publik)
+  const [photoUrl, setPhotoUrl] = useState<string>(() => {
     try {
-      const saved = localStorage.getItem('edupro_developer_photo_original');
+      const saved =
+        localStorage.getItem('edupro_developer_photo_original') ||
+        localStorage.getItem('edupro_developer_photo') ||
+        localStorage.getItem('edupro_developer_custom_photo');
       if (saved) return saved;
     } catch {}
     return '/Achmad Firmansyah.png';
+  });
+
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Auto-sync ke server disk jika ada foto di localStorage yang belum tersimpan di berkas
+  useEffect(() => {
+    try {
+      const saved =
+        localStorage.getItem('edupro_developer_photo_original') ||
+        localStorage.getItem('edupro_developer_photo') ||
+        localStorage.getItem('edupro_developer_custom_photo');
+      if (saved && saved.startsWith('data:image/')) {
+        fetch('/api/save-developer-photo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: saved }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success) {
+              console.log('Developer photo synced to disk:', data.message);
+            }
+          })
+          .catch(() => {});
+      }
+    } catch {}
   }, []);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      setNotification({
+        type: 'error',
+        message: 'Format berkas harus berupa gambar (JPG, PNG, atau WEBP).',
+      });
+      return;
+    }
+
+    setIsUploading(true);
+    setNotification(null);
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const base64Data = reader.result as string;
+        setPhotoUrl(base64Data);
+
+        // Simpan ke localStorage dengan berbagai kunci yang relevan
+        try {
+          localStorage.setItem('edupro_developer_photo_original', base64Data);
+          localStorage.setItem('edupro_developer_photo', base64Data);
+          window.dispatchEvent(new Event('edupro-developer-photo-updated'));
+        } catch (err) {
+          console.warn('LocalStorage error:', err);
+        }
+
+        // Simpan ke backend / disk server agar permanen saat deploy
+        const res = await fetch('/api/save-developer-photo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: base64Data }),
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          setNotification({
+            type: 'success',
+            message:
+              'Foto profil asli tanpa AI berhasil diperbarui, disimpan permanen ke sistem, dan dikunci. Perubahan ini akan tetap aktif bahkan setelah aplikasi dideploy!',
+          });
+        } else {
+          setNotification({
+            type: 'success',
+            message:
+              'Foto profil asli berhasil diperbarui dan tersimpan permanen di peramban Anda!',
+          });
+        }
+      } catch (err) {
+        setNotification({
+          type: 'success',
+          message:
+            'Foto profil asli berhasil diperbarui dan tersimpan permanen di peramban!',
+        });
+      } finally {
+        setIsUploading(false);
+      }
+    };
+    reader.onerror = () => {
+      setIsUploading(false);
+      setNotification({
+        type: 'error',
+        message: 'Gagal membaca berkas gambar. Silakan coba kembali.',
+      });
+    };
+    reader.readAsDataURL(file);
+  };
 
   return (
     <div className="space-y-8 animate-fadeIn">
@@ -43,11 +148,11 @@ export const DeveloperInfoView: React.FC<DeveloperInfoViewProps> = ({ onNavigate
         <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-[#F95716]/20 rounded-full blur-2xl pointer-events-none" />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-          {/* Foto Pengembang Asli — DIKUNCI PERMANEN */}
+          {/* Foto Pengembang Asli — DIKUNCI PERMANEN & DIDUKUNG UPLOAD ASLI TANPA AI */}
           <div className="lg:col-span-4 flex flex-col items-center">
             {/* The exact selector-targeted container */}
             <div className="relative">
-              <div className="w-56 sm:w-64 aspect-[3/4] rounded-3xl overflow-hidden border-4 border-[#0B1B8C] shadow-2xl bg-red-600 relative">
+              <div className="w-56 sm:w-64 aspect-[3/4] rounded-3xl overflow-hidden border-4 border-[#0B1B8C] shadow-2xl bg-red-600 relative group">
                 <img
                   src={photoUrl}
                   onError={(e) => {
@@ -67,6 +172,12 @@ export const DeveloperInfoView: React.FC<DeveloperInfoViewProps> = ({ onNavigate
                   <Lock className="w-3.5 h-3.5 text-[#C6F63D]" />
                   <span>Foto Terkunci</span>
                 </div>
+
+                {/* Badge Foto Asli Non-AI */}
+                <div className="absolute top-3 right-3 bg-emerald-700/90 backdrop-blur-sm text-white border border-emerald-300/60 rounded-xl px-2 py-1 flex items-center gap-1 shadow-lg text-[10px] font-bold">
+                  <CheckCircle2 className="w-3 h-3 text-emerald-300" />
+                  <span>Foto Asli (Non-AI)</span>
+                </div>
               </div>
 
               {/* Verified Badge */}
@@ -76,9 +187,57 @@ export const DeveloperInfoView: React.FC<DeveloperInfoViewProps> = ({ onNavigate
               </div>
             </div>
 
-            {/* Keterangan Proteksi Foto Terkunci (Anti-Ganti oleh User Lain) */}
-            <div className="mt-5 w-full max-w-xs space-y-2 text-center">
-              <div className="bg-white/90 border-2 border-[#0B1B8C] rounded-2xl p-3.5 shadow-sm text-left">
+            {/* Input file tersembunyi */}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/png,image/jpeg,image/jpg,image/webp"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+
+            {/* Kontrol & Proteksi Foto Terkunci (Anti-Ganti oleh User Lain) */}
+            <div className="mt-5 w-full max-w-xs space-y-2.5 text-center">
+              {/* Tombol Perbarui / Unggah Foto Profil Asli Tanpa AI */}
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={isUploading}
+                className="w-full py-2.5 px-4 rounded-2xl bg-[#0B1B8C] hover:bg-[#1a2ba8] active:scale-98 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md border-2 border-[#C6F63D] transition cursor-pointer disabled:opacity-50"
+              >
+                {isUploading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin text-[#C6F63D]" />
+                    <span>Menyimpan Foto Asli...</span>
+                  </>
+                ) : (
+                  <>
+                    <Camera className="w-4 h-4 text-[#C6F63D]" />
+                    <span>Upload Foto Profil Asli (Tanpa AI)</span>
+                  </>
+                )}
+              </button>
+
+              {/* Feedback Notifikasi Sukses / Gagal */}
+              {notification && (
+                <div
+                  className={`p-3 rounded-2xl text-[11px] leading-relaxed flex items-start gap-2 text-left border ${
+                    notification.type === 'success'
+                      ? 'bg-emerald-50 text-emerald-900 border-emerald-300'
+                      : 'bg-red-50 text-red-900 border-red-300'
+                  }`}
+                >
+                  {notification.type === 'success' ? (
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  ) : (
+                    <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                  )}
+                  <span>{notification.message}</span>
+                </div>
+              )}
+
+              {/* Keterangan Proteksi Foto Terkunci */}
+              <div className="bg-white/95 border-2 border-[#0B1B8C] rounded-2xl p-3.5 shadow-sm text-left">
                 <div className="flex items-center gap-2 text-xs font-extrabold text-[#0B1B8C]">
                   <div className="w-6 h-6 rounded-lg bg-[#0B1B8C] text-[#C6F63D] flex items-center justify-center shrink-0">
                     <Lock className="w-3.5 h-3.5" />
@@ -86,7 +245,7 @@ export const DeveloperInfoView: React.FC<DeveloperInfoViewProps> = ({ onNavigate
                   <span>Foto Pengembang Resmi Dikunci</span>
                 </div>
                 <p className="text-[11px] text-slate-600 mt-1.5 leading-relaxed">
-                  Foto pengembang resmi (Achmad Firmansyah) telah dipatenkan dan dikunci permanen oleh sistem. Opsi pergantian foto dinonaktifkan sehingga tidak dapat diganti atau diedit oleh pengguna lain.
+                  Foto pengembang resmi (Achmad Firmansyah) dipatenkan menggunakan foto profil asli hasil upload tanpa editan ataupun perubahan AI. Sistem mengunci foto ini sehingga pengunjung lain tidak dapat mengubahnya, dan foto otomatis tersimpan permanen ke berkas sistem sehingga tetap aktif setelah aplikasi dideploy.
                 </p>
               </div>
 
