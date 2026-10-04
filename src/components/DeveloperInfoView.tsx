@@ -211,7 +211,7 @@ export const DeveloperInfoView: React.FC<DeveloperInfoViewProps> = ({ onNavigate
                 <div className="w-4 h-4 rounded-full bg-[#C6F63D] text-[#0B1B8C] flex items-center justify-center shrink-0 mt-0.5 font-bold text-[10px] border border-[#0B1B8C]">
                   1
                 </div>
-                <span><strong>Akses Materi Terstruktur:</strong> Menyediakan 30 modul pembelajaran interaktif berbobot HOTS.</span>
+                <span><strong>Akses Materi Terstruktur:</strong> Menyediakan 40 materi pembelajaran interaktif berbobot HOTS dalam 4 modul terpadu.</span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-4 h-4 rounded-full bg-[#C6F63D] text-[#0B1B8C] flex items-center justify-center shrink-0 mt-0.5 font-bold text-[10px] border border-[#0B1B8C]">
@@ -344,7 +344,7 @@ export const DeveloperInfoView: React.FC<DeveloperInfoViewProps> = ({ onNavigate
                 1
               </div>
               <div className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                <strong className="text-[#0B1B8C]">Belajar Bertahap & Tuntas:</strong> Pelajari setiap modul secara runut mulai dari Modul 1 (Bahan Ajar Interaktif), Modul 2 (Pengembangan Media), hingga Modul 3 (Asesmen Digital).
+                <strong className="text-[#0B1B8C]">Belajar Bertahap & Tuntas:</strong> Pelajari setiap modul secara runut mulai dari Modul 1 (Kebijakan Digitalisasi), Modul 2 (Bahan Ajar Interaktif), Modul 3 (Pengembangan Media), hingga Modul 4 (Asesmen Digital).
               </div>
             </div>
 

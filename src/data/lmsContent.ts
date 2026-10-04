@@ -29,7 +29,7 @@ export interface ModuleItem {
   bimtekTitle: string;
   title: string;
   subtitle: string;
-  accentColor: 'mint' | 'orange' | 'lime';
+  accentColor: 'mint' | 'orange' | 'lime' | 'blue';
   description: string;
   quote: string;
   lessons: LessonItem[];
@@ -41,12 +41,12 @@ export const LMS_MODULES: ModuleItem[] = [
     id: 1,
     code: 'MODUL 1',
     bimtekTitle: 'Bimtek Daerah Digitalisasi Pembelajaran SD 2026',
-    title: 'Inspirasi Penggunaan Bahan Ajar Interaktif Berbasis Digital',
-    subtitle: 'Konsep, prinsip pemilihan tepat sasaran, ragam media, dan eksplorasi platform digital',
-    accentColor: 'mint',
+    title: 'Kebijakan Digitalisasi Pembelajaran Jenjang Sekolah Dasar 2026',
+    subtitle: 'Arah regulasi Inpres No. 7/2025, ekosistem 3 pilar, bantuan TIK, dan transformasi peran guru SD',
+    accentColor: 'blue',
     description:
-      'Memahami definisi bahan ajar interaktif, ciri aksi-respon-adaptif, prinsip "Bukan Sekadar Keren Tapi Tepat Sasaran", Ruang Murid, dan analisis studi kasus.',
-    quote: '“Bahan ajar terbaik bukan yang paling canggih, tetapi yang paling tepat membantu murid mencapai tujuan pembelajaran.”',
+      'Memahami arah kebijakan digitalisasi pembelajaran SD 2026 berlandaskan Inpres No. 7/2025, juknis bantuan sarana TIK, 3 pilar ekosistem (Technology, Environment, Process), 4 level transformasi, dan strategi implementasi bertahap di kelas.',
+    quote: '“Teknologi bukan pengganti guru, tetapi jembatan bagi guru menghadirkan pembelajaran yang lebih bermakna. Ketika kebijakan berubah, bukan hanya sistem yang bergerak, peran guru dan wajah sekolah pun ikut bertransformasi.”',
     lessons: [
       {
         id: 'm1-l1',
@@ -54,6 +54,316 @@ export const LMS_MODULES: ModuleItem[] = [
         moduleCode: 'MODUL 1',
         lessonNumber: 1,
         globalIndex: 0,
+        title: 'Arah Kebijakan & Visi Digitalisasi Pembelajaran SD 2026',
+        duration: '12 Menit',
+        summary: 'Memahami latar belakang arah kebijakan digitalisasi pendidikan dasar 2026 sebagai jembatan transformasi menuju Indonesia Emas 2045.',
+        keyPoints: [
+          'Digitalisasi pembelajaran jenjang SD bertujuan menciptakan proses belajar yang lebih adaptif, cerdas, dan bermakna.',
+          'Teknologi diposisikan bukan sebagai pengganti sosok guru, melainkan instrumen pendukung dan jembatan pedagogis.',
+          'Transformasi digital menuntut kesiapan holistik mulai dari pola pikir pendidik hingga ekosistem satuan pendidikan.'
+        ],
+        contentParagraphs: [
+          'Memasuki tahun 2026, Direktorat Sekolah Dasar menegaskan arah baru transformasi pembelajaran melalui akselerasi digitalisasi terstruktur. Pembelajaran di tingkat Sekolah Dasar memegang peranan krusial sebagai fondasi pembentukan literasi dasar, numerasi, dan karakter peserta didik. Kebijakan ini dirancang bukan sekadar untuk mendistribusikan perangkat elektronik ke sekolah, melainkan mentransformasi pengalaman belajar anak-anak agar lebih kontekstual, menarik, dan relevan dengan perkembangan zaman.',
+          'Salah satu pesan kunci dalam kebijakan ini adalah penegasan bahwa teknologi secanggih apa pun tidak akan pernah bisa menggantikan empati, keteladanan, dan sentuhan kemanusiaan seorang guru hebat. Sebaliknya, teknologi berperan sebagai jembatan bagi guru untuk menghadirkan diferensiasi pembelajaran, membuka akses sumber belajar interaktif, dan memvisualisasikan konsep-konsep abstrak agar mudah dipahami oleh murid usia sekolah dasar.',
+          'Dengan memahami arah kebijakan ini, kepala sekolah dan guru diharapkan mampu menyelaraskan program sekolah dengan visi pendidikan nasional menuju Indonesia Emas 2045, di mana generasi penerus bangsa dibekali kompetensi abad ke-21 tanpa kehilangan jati diri dan nilai-nilai luhur Pancasila.'
+        ],
+        practicalTip: 'Mulai dengan merefleksikan praktik pembelajaran saat ini di kelas Anda: sejauh mana perangkat teknologi telah dimanfaatkan untuk melibatkan murid secara aktif, bukan sekadar mengganti papan tulis dengan proyektor statis?',
+        reflectionPrompt: 'Bagaimana pemanfaatan teknologi di sekolah atau kelas Anda saat ini, dan peluang apa yang paling nyata dapat Anda kembangkan untuk menghadirkan pembelajaran yang lebih bermakna bagi murid?'
+      },
+      {
+        id: 'm1-l2',
+        moduleId: 1,
+        moduleCode: 'MODUL 1',
+        lessonNumber: 2,
+        globalIndex: 1,
+        title: 'Tantangan Pendidikan: Kesenjangan Akses & Literasi Digital',
+        duration: '14 Menit',
+        summary: 'Menganalisis data UNICEF dan UNESCO mengenai kesenjangan akses internet, infrastruktur antardaerah, dan kesiapan literasi peserta didik.',
+        keyPoints: [
+          'Berdasarkan UNICEF Indonesia 2024-2025, masih terdapat ketimpangan akses internet stabil dan perangkat TIK terutama di wilayah 3T.',
+          'Kesiapan ekosistem sekolah belum merata akibat variasi kompetensi guru dan infrastruktur pendukung.',
+          'Kesenjangan literasi digital murid menuntut pembelajaran yang inklusif dan mendasar dari aspek keamanan digital.'
+        ],
+        contentParagraphs: [
+          'Laporan Situation Analysis on Digital Learning in Indonesia (UNICEF Indonesia, 2024–2025) mengungkapkan bahwa tantangan utama pendidikan dasar saat ini adalah disparitas infrastruktur antara daerah perkotaan dan daerah tertinggal, terdepan, dan terluar (3T). Masih banyak satuan pendidikan dan murid yang belum memiliki konektivitas internet stabil serta perangkat belajar yang memadai, sehingga potensi pembelajaran digital belum dapat dinikmati secara merata.',
+          'Di sisi lain, laporan Digital Education Transformation (UNESCO, 2025) menyoroti kesiapan ekosistem sekolah yang sangat beragam. Ketimpangan ini bukan hanya perihal ketersediaan gawai, melainkan juga menyangkut disparitas literasi digital guru dan peserta didik. Di beberapa daerah, murid telah mahir menggunakan gawai namun belum terarah pada pemanfaatan edukatif, sementara di daerah lain pengenalan dasar komputer masih menjadi kendala harian.',
+          'Oleh karena itu, kebijakan digitalisasi 2026 mengadopsi pendekatan asimetris dan berkeadilan: intervensi khusus disiapkan bagi sekolah dengan keterbatasan sarana melalui penyediaan internet satelit dan pasokan listrik mandiri bertenaga surya (solar panel).'
+        ],
+        practicalTip: 'Lakukan pemetaan sederhana kesiapan murid Anda: kenali siapa saja yang sudah akrab dengan gawai dan siapa yang membutuhkan bimbingan langsung, agar tugas digital tidak membebani murid atau orang tua.',
+        reflectionPrompt: 'Apa tantangan kesenjangan infrastruktur atau kesiapan digital terbesar yang Anda jumpai di lingkungan sekolah Anda, dan langkah kreatif apa yang pernah Anda lakukan untuk mengatasinya?'
+      },
+      {
+        id: 'm1-l3',
+        moduleId: 1,
+        moduleCode: 'MODUL 1',
+        lessonNumber: 3,
+        globalIndex: 2,
+        title: 'Tiga Urgensi Utama Digitalisasi Pembelajaran Sekolah Dasar',
+        duration: '12 Menit',
+        summary: 'Membedah urgensi pemerataan akses, penguatan literasi digital, dan peningkatan kapasitas SDM pendidikan dasar.',
+        keyPoints: [
+          'Pemerataan Akses: Membuka kesempatan belajar berkualitas setara bagi seluruh anak bangsa (Bappenas Indonesia Emas 2045).',
+          'Kualitas & Literasi Digital: Membekali murid agar mampu memanfaatkan teknologi secara kritis, produktif, aman, dan bertanggung jawab (UNESCO 2025).',
+          'Penguatan Kapasitas SDM: Menyiapkan kepala sekolah, guru, dan murid untuk beradaptasi dengan model belajar modern (Peta Jalan Pendidikan 2020–2035).'
+        ],
+        contentParagraphs: [
+          'Kebutuhan mendesak akan digitalisasi pembelajaran jenjang SD bertumpu pada tiga urgensi strategis nasional. Pertama adalah Pemerataan Akses Pendidikan Berkualitas. Sebagaimana termaktub dalam rancangan Indonesia Emas 2045 oleh Bappenas, teknologi adalah pengungkit utama (leveraging tool) untuk mendemokratisasi akses ilmu pengetahuan, sehingga anak-anak di pelosok nusantara dapat mengakses modul dan konten ajar yang sama mutunya dengan anak-anak di kota besar.',
+          'Kedua, Peningkatan Kualitas dan Literasi Digital Peserta Didik. Menurut UNESCO (2025), literasi digital bukan sekadar kemampuan mengoperasikan aplikasi, melainkan kemampuan berpikir kritis dalam menyaring informasi, berkreasi secara produktif, menjaga keamanan data pribadi, serta beretika di ruang siber. Generasi sekolah dasar perlu dibiasakan sejak dini agar tidak menjadi konsumen pasif di tengah derasnya arus digital.',
+          'Ketiga, Penguatan Kapasitas SDM Pendidikan. Merujuk Peta Jalan Pendidikan Kemendikbudristek 2020–2035, guru dan kepala sekolah dituntut menjadi pembelajar sepanjang hayat yang luwes beradaptasi dengan metodologi baru, seperti pembelajaran bauran (blended learning) dan pembelajaran berbasis proyek interaktif.'
+        ],
+        practicalTip: 'Tanamkan aturan etika dan keamanan digital sederhana di kelas, seperti menjaga kerahasiaan kata sandi dan membiasakan saling menghargai saat berdiskusi di platform daring.',
+        reflectionPrompt: 'Dari ketiga urgensi di atas (pemerataan akses, literasi digital kritis, dan kapasitas pendidik), aspek mana yang menurut Anda paling mendesak untuk diperkuat di sekolah Anda saat ini?'
+      },
+      {
+        id: 'm1-l4',
+        moduleId: 1,
+        moduleCode: 'MODUL 1',
+        lessonNumber: 4,
+        globalIndex: 3,
+        title: 'Payung Hukum: Inpres No. 7 Tahun 2025 & Regulasi Digitalisasi',
+        duration: '15 Menit',
+        summary: 'Memahami landasan yuridis Inpres No. 7 Tahun 2025 dan Perdirjen PAUD Dikdas Dikmen No. 4970/C/HK.03.01/2025.',
+        keyPoints: [
+          'Inpres No. 7 Tahun 2025 menginstruksikan percepatan digitalisasi pendidikan di seluruh kementerian dan pemerintah daerah.',
+          'Empat fokus utama: penyediaan infrastruktur, integrasi sistem, penguatan SDM guru, dan penetapan SOP regulasi.',
+          'Perdirjen No. 4970/C/HK.03.01/2025 memuat Petunjuk Teknis penyaluran dan pemanfaatan sarana digitalisasi pembelajaran.'
+        ],
+        contentParagraphs: [
+          'Instruksi Presiden (Inpres) Nomor 7 Tahun 2025 menjadi payung hukum tertinggi yang mengonsolidasikan komitmen lintas sektor dalam mempercepat transformasi digital pendidikan nasional. Inpres ini mengamanatkan empat fokus prioritas terukur: (1) Penyediaan infrastruktur digital fisik dan jaringan, seperti akses internet, perangkat komputer, dan layar sentuh interaktif; (2) Pengembangan sistem dan platform pembelajaran terpadu yang dapat diakses mudah oleh seluruh satuan pendidikan; (3) Peningkatan kompetensi pendidik dan tenaga kependidikan dalam implementasi teknologi; serta (4) Penyusunan regulasi, panduan operasional (SOP), dan standar pelaksanaan yang seragam dari pusat hingga daerah.',
+          'Sebagai tindak lanjut teknis di jenjang pendidikan dasar dan menengah, diterbitkan Peraturan Direktur Jenderal PAUD, Pendidikan Dasar, dan Pendidikan Menengah Nomor 4970/C/HK.03.01/2025 tentang Petunjuk Teknis Penyaluran Bantuan Pemerintah Sarana Digitalisasi Pembelajaran pada Satuan Pendidikan Tahun 2025.',
+          'Juknis ini mengatur tata cara penerimaan, pendistribusian, pemanfaatan, pelaporan, hingga pemeliharaan aset TIK sekolah agar tidak terbengkalai di ruang penyimpanan (gudang), melainkan aktif difungsikan setiap hari untuk kegiatan belajar mengajar murid.'
+        ],
+        practicalTip: 'Pastikan inventaris perangkat TIK bantuan pemerintah di sekolah Anda tercatat resmi dalam RKAS/Dapodik dan memiliki jadwal pemanfaatan kelas yang transparan.',
+        reflectionPrompt: 'Bagaimana keselarasan pengelolaan sarana TIK di sekolah Anda dengan panduan regulasi pemerintah, dan apa perbaikan tata kelola yang perlu didorong?'
+      },
+      {
+        id: 'm1-l5',
+        moduleId: 1,
+        moduleCode: 'MODUL 1',
+        lessonNumber: 5,
+        globalIndex: 4,
+        title: 'Intervensi Direktorat SD & Bantuan Paket Peralatan TIK 2025',
+        duration: '15 Menit',
+        summary: 'Mengetahui paket sarana TIK (Papan Interaktif Digital, Laptop, Internet Satelit, Solar Panel) dan program peningkatan SDM.',
+        keyPoints: [
+          'Empat pilar strategi Direktorat SD: Regulasi, Platform Teknologi, Penguatan SDM, dan Bantuan Peralatan TIK.',
+          'Bantuan TIK 2025 mencakup: Papan Interaktif Digital (PID), Laptop guru, Harddisk/Media eksternal, Internet Satelit, dan Solar Panel.',
+          'Program SDM diperkuat melalui Bimtek Nasional, Bimtek Daerah, Webinar, Siniar (Podcast), dan Pengimbasan antarguru.'
+        ],
+        contentParagraphs: [
+          'Direktorat Sekolah Dasar mengimplementasikan empat pilar intervensi strategis untuk memastikan keberhasilan digitalisasi di satuan pendidikan. Pilar pertama adalah penyelarasan regulasi dan tata kelola. Pilar kedua adalah penyediaan platform teknologi pendidikan terintegrasi yang memudahkan distribusi materi ajar dan asesmen.',
+          'Pilar ketiga berfokus pada Penguatan Sumber Daya Manusia (SDM). Bimbingan teknis dilaksanakan secara berjenjang melalui Bimtek Tingkat Nasional bagi fasilitator inti, dilanjutkan Bimtek Daerah bagi ribuan perwakilan guru sekolah dasar, pengadaan seri webinar rutin, podcast/siniar edukatif, serta mekanisme pengimbasan (peer-coaching) di mana guru peserta bimtek wajib menularkan ilmunya ke rekan sejawat di gugus atau KKG sekolah masing-masing.',
+          'Pilar keempat adalah penyaluran paket Bantuan Peralatan TIK 2025 yang disesuaikan dengan tipologi sekolah: sekolah reguler menerima Papan Interaktif Digital (PID), laptop operasional guru, dan media penyimpanan eksternal; sekolah tipe II di daerah tertantang jaringan menerima tambahan perangkat internet satelit; sedangkan sekolah tipe III yang belum teraliri listrik PLN mendapatkan sistem pembangkit listrik tenaga surya (solar panel).'
+        ],
+        practicalTip: 'Jika sekolah Anda merupakan penerima Papan Interaktif Digital (PID), buatlah jadwal rotasi kelas teratur agar seluruh siswa dari kelas 1 sampai kelas 6 merasakan pengalaman interaktif.',
+        reflectionPrompt: 'Bagaimana rencana pengimbasan materi Bimtek Digitalisasi ini yang akan Anda bagikan kepada rekan-rekan guru di komunitas KKG atau sekolah Anda?'
+      },
+      {
+        id: 'm1-l6',
+        moduleId: 1,
+        moduleCode: 'MODUL 1',
+        lessonNumber: 6,
+        globalIndex: 5,
+        title: 'Menuju Sekolah Masa Depan: 4 Level Transformasi Digital Pendidikan',
+        duration: '12 Menit',
+        summary: 'Memahami tahapan evolusi sekolah dasar dari level adopsi dasar hingga sekolah masa depan yang berdaya teknologi penuh.',
+        keyPoints: [
+          'Transformasi digital sekolah tidak berlangsung seketika, melainkan melalui 4 tahapan evolutif yang terukur.',
+          'Level 1 (Emerging/Dasar): Pengenalan perangkat dasar dan digitalisasi dokumen administratif.',
+          'Level 2 (Applying/Penerapan): Penggunaan teknologi dalam presentasi dan media ajar kelas.',
+          'Level 3 (Infusing/Pengintegrasian) & Level 4 (Transforming/Sekolah Cerdas Masa Depan): Pembelajaran berpusat pada murid dengan ekosistem digital mandiri.'
+        ],
+        contentParagraphs: [
+          'Perjalanan menuju "Sekolah Masa Depan" membutuhkan pemahaman tahapan kematangan digital (digital maturity model). Transformasi digital pendidikan diklasifikasikan ke dalam 4 tingkatan utama yang membantu sekolah menilai posisi saat ini dan menyusun peta jalan perbaikan berkelanjutan.',
+          'Pada Level 1 (Emerging), sekolah baru mulai menyediakan akses komputer dasar dan menggunakannya terutama untuk kebutuhan administratif atau pengetikan soal ujian. Pada Level 2 (Applying), guru mulai menggunakan proyektor atau laptop untuk menampilkan video YouTube dan slide bahan ajar, namun interaksi murid masih cenderung pasif satu arah.',
+          'Pada Level 3 (Infusing), teknologi mulai terintegrasi secara mendalam dalam kurikulum: murid menggunakan aplikasi untuk eksplorasi mandiri, mengerjakan kuis interaktif, dan berkolaborasi dalam kelompok. Puncaknya pada Level 4 (Transforming), sekolah telah membangun kultur digital yang utuh, di mana data hasil belajar dianalisis secara berkala untuk personalisasi pembelajaran, asesmen berdiferensiasi berjalan mulus, serta kolaborasi lintas kelas dan sekolah terjalin secara daring.'
+        ],
+        practicalTip: 'Nilai secara obyektif posisi sekolah Anda saat ini berada di level berapa, lalu tentukan 1 target perbaikan konkret untuk naik ke level berikutnya dalam semester ini.',
+        reflectionPrompt: 'Menurut analisis Anda, berada di level berapakah sekolah Anda saat ini (Level 1, 2, 3, atau 4), dan apa hambatan terbesar untuk melangkah ke tingkat berikutnya?'
+      },
+      {
+        id: 'm1-l7',
+        moduleId: 1,
+        moduleCode: 'MODUL 1',
+        lessonNumber: 7,
+        globalIndex: 6,
+        title: 'Tiga Pilar Ekosistem Digitalisasi: Technology, Environment, & Process',
+        duration: '14 Menit',
+        summary: 'Menyelaraskan keterpaduan tiga pilar utama yang harus dipastikan guru agar pembelajaran digital efektif dan aman.',
+        keyPoints: [
+          'Pilar Technology: Pemanfaatan perangkat, aplikasi, konektivitas, dan multimedia digital tepat sasaran.',
+          'Pilar Environment: Penciptaan lingkungan belajar fisik dan digital yang aman, kondusif, fleksibel, dan inklusif.',
+          'Pilar Process: Perancangan alur belajar interaktif, kolaboratif, berpusat pada murid, dan berkelanjutan.'
+        ],
+        contentParagraphs: [
+          'Digitalisasi pembelajaran tidak dapat dipandang sebagai instalasi gawai semata, melainkan sebuah ekosistem holistik yang saling menopang. Guru sekolah dasar harus memastikan harmonisasi antara tiga pilar utama: Technology, Environment, dan Process.',
+          'Pilar Technology mencakup ketersediaan dan pemilihan perangkat keras (hardware), perangkat lunak (software), koneksi internet, serta konten multimedia. Guru bertugas memilih alat yang paling relevan dengan usia anak SD, tidak rumit dioperasikan, dan langsung mendukung pencapaian capaian pembelajaran (CP).',
+          'Pilar Environment menekankan penciptaan ruang belajar fisik yang aman (penataan kabel rapi, pencahayaan cukup, ergonomi tempat duduk anak) serta iklim digital yang sehat (perlindungan dari cyberbullying, konten negatif, dan kelelahan mata/screen-time berlebih).',
+          'Pilar Process berfokus pada pedagogi pembelajaran: bagaimana guru merancang sintaks pembelajaran yang memantik rasa ingin tahu anak, memfasilitasi kerja kelompok kolaboratif, serta melakukan pemantauan perkembangan kognitif murid secara berkala.'
+        ],
+        practicalTip: 'Periksa tata letak ruang kelas Anda: pastikan proyektor atau layar PID dapat dilihat jelas oleh seluruh murid tanpa terhalang pantulan sinar matahari atau posisi meja yang sempit.',
+        reflectionPrompt: 'Dari ketiga pilar (Technology, Environment, Process), pilar mana yang menurut Anda sering terabaikan di sekolah dasar dan bagaimana strategi Anda memperbaikinya?'
+      },
+      {
+        id: 'm1-l8',
+        moduleId: 1,
+        moduleCode: 'MODUL 1',
+        lessonNumber: 8,
+        globalIndex: 7,
+        title: 'Peran Kunci Guru dalam Pembelajaran Cerdas: Framework Smart 4',
+        duration: '15 Menit',
+        summary: 'Menguasai 4 pilar kecakapan guru: Smart Content, Smart Interaction, Smart Evaluation, dan Smart Physical Surroundings.',
+        keyPoints: [
+          'Smart Content & Presentation: Menyusun bahan ajar digital yang komunikatif, visual, dan ramah anak SD.',
+          'Smart Interaction & Engagement: Memanfaatkan platform interaktif dan LMS untuk memicu keaktifan murid.',
+          'Smart Evaluation: Melaksanakan asesmen formatif digital yang memberi umpan balik cepat dan tepat.',
+          'Smart Physical Surroundings: Menata lingkungan belajar kelas yang nyaman, fleksibel, dan kondusif.'
+        ],
+        contentParagraphs: [
+          'Guru adalah nakhoda utama di dalam kelas digital. Untuk mewujudkan ekosistem belajar yang berdaya guna, guru dituntut menguasai kerangka kerja "Smart Teacher" yang terdiri atas empat dimensi peran terintegrasi.',
+          'Dimensi pertama adalah Smart Content & Presentation. Guru tidak lagi hanya menyalin isi buku teks ke layar LCD, melainkan mengkurasi konten visual, animasi konsep sains, dan lembar kerja digital yang merangsang daya nalar siswa. Dimensi kedua, Smart Interaction & Engagement, mengajak guru menggunakan gamifikasi, jajak pendapat kilat, dan papan interaktif agar murid berlomba-lomba berpartisipasi menyampaikan gagasannya.',
+          'Dimensi ketiga adalah Smart Evaluation, di mana guru memanfaatkan kuis digital dan rubrik daring untuk mendapatkan data ketuntasan belajar secara instan tanpa harus menghabiskan waktu berjam-jam mengoreksi manual di atas kertas. Terakhir, Smart Physical Surroundings, yakni kepekaan guru dalam memodifikasi susunan bangku kelas untuk diskusi kelompok kecil saat beraktivitas digital.'
+        ],
+        practicalTip: 'Gunakan variasi polling singkat atau tebak gambar interaktif di 5 menit awal pembelajaran untuk membangun fokus dan keceriaan murid.',
+        reflectionPrompt: 'Di antara empat dimensi (Smart Content, Interaction, Evaluation, Surroundings), manakah yang sudah menjadi kekuatan Anda dan mana yang ingin Anda tingkatkan?'
+      },
+      {
+        id: 'm1-l9',
+        moduleId: 1,
+        moduleCode: 'MODUL 1',
+        lessonNumber: 9,
+        globalIndex: 8,
+        title: 'Target Penggunaan Bertahap & Penerapan Blended Learning di SD',
+        duration: '14 Menit',
+        summary: 'Panduan praktis target jam digital mingguan, model blended learning, dan pemantauan berkala bersama kepala sekolah.',
+        keyPoints: [
+          'Penerapan bertahap: Semester I minimal 1 kali per minggu per mata pelajaran; Semester II ditingkatkan 2–3 kali per minggu.',
+          'Penerapan Blended Learning mengombinasikan keunggulan tatap muka langsung dan eksplorasi materi digital.',
+          'Pelibatan murid secara aktif melalui presentasi kelompok kecil, kuis online, dan penggunaan PID.',
+          'Pelaporan pelaksanaan secara periodik kepada kepala sekolah untuk evaluasi dan perbaikan.'
+        ],
+        contentParagraphs: [
+          'Perubahan besar dimulai dari langkah pertama yang realistis dan terukur. Direktorat SD menyarankan agar satuan pendidikan tidak memaksakan peralihan digital 100% secara mendadak, melainkan menggunakan strategi eskalasi bertahap.',
+          'Pada Semester I, guru menetapkan target menggunakan sarana digital minimal satu kali dalam satu mata pelajaran setiap minggu. Target ini memberikan ruang adaptasi bagi guru yang masih canggung dan murid yang baru pertama kali berinteraksi dengan perangkat di sekolah. Memasuki Semester II, intensitas ditingkatkan secara percaya diri menjadi 2 hingga 3 kali pertemuan per minggu.',
+          'Strategi pembelajaran yang dianjurkan adalah Blended Learning (pembelajaran bauran). Guru membuka sesi dengan penjelasan konsep secara luring, dilanjutkan dengan murid berpasangan mengeksplorasi simulasi digital, dan diakhiri dengan diskusi refleksi bersama. Guru mendokumentasikan pelaksanaan ini dan melaporkannya kepada kepala sekolah sebagai bukti kinerja dan bahan evaluasi berkala.'
+        ],
+        practicalTip: 'Tetapkan satu hari dalam seminggu sebagai "Hari Digital Kelas", misalnya setiap hari Rabu untuk mata pelajaran IPAS atau Matematika.',
+        reflectionPrompt: 'Bagaimana rencana target mingguan pemanfaatan teknologi yang paling realistis untuk Anda terapkan di kelas Anda pada semester ini?'
+      },
+      {
+        id: 'm1-l10',
+        moduleId: 1,
+        moduleCode: 'MODUL 1',
+        lessonNumber: 10,
+        globalIndex: 9,
+        title: 'Pengembangan Konten Guru, Platform Digital & Dampak Kebijakan',
+        duration: '15 Menit',
+        summary: 'Praktik membuat konten Canva/PPT, kuis Kahoot/Google Form, video lokal 3-5 menit, SOP sarana, serta transformasi ekosistem sekolah.',
+        keyPoints: [
+          'Guru terampil membuat slide interaktif Canva/PowerPoint, kuis daring (Kahoot/Wayground/Google Form), dan video 3–5 menit berkonteks lokal.',
+          'Pengelolaan dan perawatan sarana TIK (laptop, proyektor, PID) secara bertanggung jawab.',
+          'Dampak kebijakan mentransformasi peran Kepala Sekolah (leader of change), Guru (inovator), Murid (literat), dan Orang Tua (mitra aktif).',
+          'Refleksi penutup: Menolak tertinggal di zona nyaman masa lalu dan berani memimpin perubahan pendidikan dasar.'
+        ],
+        contentParagraphs: [
+          'Pada materi pemungkas Modul 1 ini, guru diajak melangkah dari sekadar pengguna menjadi kreator konten edukasi yang relevan dengan konteks lokal muridnya. Guru SD dapat memanfaatkan Canva for Education atau PowerPoint untuk membuat bahan tayang bercerita, menyusun kuis ceria melalui platform kuis interaktif, serta merekam video penjelasan ringkas berdurasi 3 hingga 5 menit.',
+          'Bersamaan dengan kreasi konten, pengelolaan sarana digital di kelas menjadi tanggung jawab bersama. Sekolah perlu menerapkan SOP sederhana: memastikan perangkat dimatikan dengan benar setelah jam belajar, kabel tersimpan rapi, dan layar PID dibersihkan dengan kain mikrofiber lembut secara berkala.',
+          'Kebijakan digitalisasi pembelajaran 2026 pada akhirnya mentransformasi seluruh wajah ekosistem sekolah. Kepala sekolah tampil sebagai leader of change yang memfasilitasi kebutuhan guru; guru bertumbuh menjadi inovator pembelajaran; murid berkembang menjadi insan yang literat teknologi; serta orang tua menjadi mitra kolaboratif dalam mendampingi anak. Ketika dunia berubah begitu cepat, pendidikan dasar tidak boleh berjalan lambat!'
+        ],
+        practicalTip: 'Cobalah buat 1 video pendek berdurasi 3 menit menggunakan smartphone yang menjelaskan konsep sains sederhana di sekitar lingkungan sekolah Anda.',
+        reflectionPrompt: 'Apakah selama ini pembelajaran di kelas Anda sudah menjawab tantangan zaman, ataukah masih berada di zona nyaman metode lama? Komitmen apa yang Anda tetapkan mulai hari ini?'
+      }
+    ],
+    quiz: [
+      {
+        id: 1,
+        moduleId: 1,
+        moduleRef: 'Modul 1 · Landasan Regulasi',
+        question: 'Berdasarkan Inpres Nomor 7 Tahun 2025, manakah yang BUKAN merupakan salah satu fokus utama program digitalisasi pembelajaran?',
+        options: [
+          'Penyediaan infrastruktur digital seperti internet, perangkat pembelajaran, dan papan interaktif',
+          'Pengembangan sistem pembelajaran digital yang terintegrasi di satuan pendidikan',
+          'Penggantian peran guru di dalam kelas secara penuh dengan sistem kecerdasan buatan',
+          'Penguatan kapasitas SDM pendidik dan tenaga kependidikan dalam implementasi teknologi'
+        ],
+        correctIndex: 2,
+        explanation: 'Sesuai Inpres No. 7 Tahun 2025 dan prinsip dasar kebijakan, teknologi bukan pengganti guru, melainkan instrumen pendukung untuk memperkuat peran guru dan kualitas pembelajaran murid.'
+      },
+      {
+        id: 2,
+        moduleId: 1,
+        moduleRef: 'Modul 1 · Ekosistem Digital',
+        question: 'Tiga pilar utama dalam ekosistem digitalisasi pembelajaran yang wajib dipastikan keterpaduannya oleh guru sekolah dasar adalah...',
+        options: [
+          'Hardware, Software, dan Brainware',
+          'Technology, Environment, dan Process',
+          'Kurikulum, Evaluasi, dan Sarana Prasarana',
+          'Guru, Kepala Sekolah, dan Pengawas Sekolah'
+        ],
+        correctIndex: 1,
+        explanation: 'Tiga pilar utama ekosistem digitalisasi pembelajaran menurut panduan Direktorat SD adalah Technology (sarana perangkat dan aplikasi), Environment (lingkungan fisik dan digital yang kondusif/aman), dan Process (pedagogi interaktif berpusat pada murid).'
+      },
+      {
+        id: 3,
+        moduleId: 1,
+        moduleRef: 'Modul 1 · Bantuan Sarana TIK',
+        question: 'Untuk sekolah tipe III yang berada di daerah tertinggal tanpa pasokan listrik PLN dan tanpa jaringan internet kabel, paket bantuan sarana TIK 2025 dilengkapi dengan...',
+        options: [
+          'Genset bahan bakar solar dan kabel fiber optik darat',
+          'Perangkat Internet Satelit dan sistem Pembangkit Listrik Tenaga Surya (Solar Panel)',
+          'Kuota seluler pascabayar dan modem USB portabel',
+          'Laboratorium komputer permanen dengan server lokal'
+        ],
+        correctIndex: 1,
+        explanation: 'Sesuai Juknis Bantuan Sarana Digitalisasi Pembelajaran 2025, sekolah tipe II dan III mendapatkan dukungan internet satelit, dan sekolah tipe III secara khusus dilengkapi dengan Solar Panel untuk kemandirian daya listrik.'
+      },
+      {
+        id: 4,
+        moduleId: 1,
+        moduleRef: 'Modul 1 · Peran Guru Cerdas',
+        question: 'Dalam kerangka peran guru cerdas (Smart Teacher), tindakan guru merancang asesmen digital berkala dan menindaklanjuti data hasil belajar murid termasuk dalam dimensi...',
+        options: [
+          'Smart Content & Presentation',
+          'Smart Interaction & Engagement',
+          'Smart Evaluation',
+          'Smart Physical Surroundings'
+        ],
+        correctIndex: 2,
+        explanation: 'Smart Evaluation adalah dimensi di mana guru melaksanakan asesmen digital dan pemantauan perkembangan belajar murid secara berkala untuk menentukan tindak lanjut dan diferensiasi pembelajaran sesuai kebutuhan murid.'
+      },
+      {
+        id: 5,
+        moduleId: 1,
+        moduleRef: 'Modul 1 · Target Implementasi',
+        question: 'Bagaimanakah rekomendasi pentahapan target penggunaan perangkat digital di kelas bagi guru sekolah dasar menurut panduan implementasi Direktorat SD?',
+        options: [
+          'Harus langsung 100% digital di seluruh mata pelajaran sejak minggu pertama semester',
+          'Semester I minimal 1 kali per minggu per mapel, kemudian Semester II ditingkatkan menjadi 2–3 kali per minggu',
+          'Hanya digunakan saat ujian akhir semester dan penilaian tengah semester',
+          'Cukup 1 kali dalam satu semester saat ada supervisi kepala sekolah'
+        ],
+        correctIndex: 1,
+        explanation: 'Strategi implementasi menekankan langkah bertahap yang konsisten: Semester I minimal 1 kali per minggu per mata pelajaran, lalu ditingkatkan pada Semester II menjadi 2–3 kali per minggu secara berkelanjutan.'
+      }
+    ]
+  },
+  {
+    id: 2,
+    code: 'MODUL 2',
+    bimtekTitle: 'Bimtek Daerah Digitalisasi Pembelajaran SD 2026',
+    title: 'Inspirasi Penggunaan Bahan Ajar Interaktif Berbasis Digital',
+    subtitle: 'Konsep, prinsip pemilihan tepat sasaran, ragam media, dan eksplorasi platform digital',
+    accentColor: 'orange',
+    description:
+      'Memahami definisi bahan ajar interaktif, ciri aksi-respon-adaptif, prinsip "Bukan Sekadar Keren Tapi Tepat Sasaran", Ruang Murid, dan analisis studi kasus.',
+    quote: '“Bahan ajar terbaik bukan yang paling canggih, tetapi yang paling tepat membantu murid mencapai tujuan pembelajaran.”',
+    lessons: [
+      {
+        id: 'm2-l1',
+        moduleId: 2,
+        moduleCode: 'MODUL 2',
+        lessonNumber: 1,
+        globalIndex: 10,
         title: 'Konsep & Definisi Bahan Ajar Interaktif',
         duration: '12 Menit',
         summary: 'Bahan ajar yang memungkinkan murid berinteraksi langsung dengan isi pembelajaran sehingga mereka aktif berpikir, mencoba, dan merespons.',
@@ -70,11 +380,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Bahan ajar apa yang paling sering Bapak/Ibu gunakan di kelas, dan bagaimana respon murid saat menggunakannya?'
       },
       {
-        id: 'm1-l2',
-        moduleId: 1,
-        moduleCode: 'MODUL 1',
+        id: 'm2-l2',
+        moduleId: 2,
+        moduleCode: 'MODUL 2',
         lessonNumber: 2,
-        globalIndex: 1,
+        globalIndex: 11,
         title: 'Tiga Ciri Utama Bahan Ajar Interaktif',
         duration: '14 Menit',
         summary: 'Membutuhkan aksi pengguna, memberikan respon/umpan balik langsung, dan bersifat dinamis serta adaptif.',
@@ -91,11 +401,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Apakah materi digital yang Anda gunakan di kelas sudah memiliki umpan balik langsung saat murid salah memilih?'
       },
       {
-        id: 'm1-l3',
-        moduleId: 1,
-        moduleCode: 'MODUL 1',
+        id: 'm2-l3',
+        moduleId: 2,
+        moduleCode: 'MODUL 2',
         lessonNumber: 3,
-        globalIndex: 2,
+        globalIndex: 12,
         title: 'Lima Manfaat Bahan Ajar Interaktif bagi Murid SD',
         duration: '12 Menit',
         summary: 'Meningkatkan keterlibatan, memfasilitasi pemahaman mendalam, memberi umpan balik, melatih berpikir kritis, dan mencapai TP.',
@@ -114,11 +424,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Manfaat mana dari kelima poin di atas yang paling dirasakan perubahannya oleh murid Anda?'
       },
       {
-        id: 'm1-l4',
-        moduleId: 1,
-        moduleCode: 'MODUL 1',
+        id: 'm2-l4',
+        moduleId: 2,
+        moduleCode: 'MODUL 2',
         lessonNumber: 4,
-        globalIndex: 3,
+        globalIndex: 13,
         title: 'Prinsip 1: Keselarasan dengan Tujuan Pembelajaran',
         duration: '15 Menit',
         summary: 'Bukan sekadar keren, tapi tepat sasaran! Bahan ajar adalah "kendaraan" menuju tujuan pembelajaran.',
@@ -135,11 +445,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Pernahkah Anda menggunakan aplikasi digital yang sangat disukai murid namun ternyata capaian belajarnya tidak tercapai? Mengapa hal itu terjadi?'
       },
       {
-        id: 'm1-l5',
-        moduleId: 1,
-        moduleCode: 'MODUL 1',
+        id: 'm2-l5',
+        moduleId: 2,
+        moduleCode: 'MODUL 2',
         lessonNumber: 5,
-        globalIndex: 4,
+        globalIndex: 14,
         title: 'Prinsip 2, 3, & 4: Karakteristik Murid, Konteks & Kecukupan',
         duration: '13 Menit',
         summary: 'Menyesuaikan usia kognitif, kondisi gawai sekolah (Mode Klasikal), dan kecukupan porsi materi.',
@@ -156,11 +466,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Bagaimana strategi Bapak/Ibu mengelola giliran interaksi murid saat menggunakan 1 layar di depan kelas?'
       },
       {
-        id: 'm1-l6',
-        moduleId: 1,
-        moduleCode: 'MODUL 1',
+        id: 'm2-l6',
+        moduleId: 2,
+        moduleCode: 'MODUL 2',
         lessonNumber: 6,
-        globalIndex: 5,
+        globalIndex: 15,
         title: 'Ragam Bahan Ajar Interaktif Berbasis Digital',
         duration: '15 Menit',
         summary: 'Gim edukasi, materi bertema (pendalaman konsep & kuis cabang alur), dan lab maya (simulasi eksperimen).',
@@ -177,11 +487,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Jenis bahan ajar interaktif mana dari ketiga ragam di atas yang paling jarang Anda manfaatkan di sekolah?'
       },
       {
-        id: 'm1-l7',
-        moduleId: 1,
-        moduleCode: 'MODUL 1',
+        id: 'm2-l7',
+        moduleId: 2,
+        moduleCode: 'MODUL 2',
         lessonNumber: 7,
-        globalIndex: 6,
+        globalIndex: 16,
         title: 'Eksplorasi Ruang Murid Kemendikbudristek',
         duration: '16 Menit',
         summary: 'Pemanfaatan portal rumah.pendidikan.go.id, 4.800+ materi, filter mata pelajaran, dan versi offline.',
@@ -199,11 +509,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Apakah Bapak/Ibu sudah pernah mencoba mengakses menu Sumber Belajar di rumah.pendidikan.go.id?'
       },
       {
-        id: 'm1-l8',
-        moduleId: 1,
-        moduleCode: 'MODUL 1',
+        id: 'm2-l8',
+        moduleId: 2,
+        moduleCode: 'MODUL 2',
         lessonNumber: 8,
-        globalIndex: 7,
+        globalIndex: 17,
         title: 'Ragam Platform Kreasi Bahan Ajar Digital',
         duration: '15 Menit',
         summary: 'Inspirasi Canva, Wayground, Wordwall, Polypad, dan Qreatif Educative untuk semua mata pelajaran.',
@@ -222,11 +532,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Platform apa yang paling sering Bapak/Ibu gunakan untuk membuat permainan interaktif di kelas?'
       },
       {
-        id: 'm1-l9',
-        moduleId: 1,
-        moduleCode: 'MODUL 1',
+        id: 'm2-l9',
+        moduleId: 2,
+        moduleCode: 'MODUL 2',
         lessonNumber: 9,
-        globalIndex: 8,
+        globalIndex: 18,
         title: 'Platform Khusus Sains, Matematika, Seni & Koding',
         duration: '15 Menit',
         summary: 'PhET Simulation, Google Earth, Sketchfab 3D, ScratchJr, Coolmath4kids, dan Musicca.',
@@ -245,11 +555,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Konsep sains abstrak apa di kelas Anda yang paling membutuhkan bantuan simulasi visual PhET atau model 3D?'
       },
       {
-        id: 'm1-l10',
-        moduleId: 1,
-        moduleCode: 'MODUL 1',
+        id: 'm2-l10',
+        moduleId: 2,
+        moduleCode: 'MODUL 2',
         lessonNumber: 10,
-        globalIndex: 9,
+        globalIndex: 19,
         title: 'Analisis Studi Kasus: Bu Lestari vs Pak Dedi',
         duration: '16 Menit',
         summary: 'Membedah mengapa pemilihan bahan ajar Bu Lestari SUDAH TEPAT sedangkan Pak Dedi KURANG TEPAT.',
@@ -269,8 +579,8 @@ export const LMS_MODULES: ModuleItem[] = [
     quiz: [
       {
         id: 101,
-        moduleId: 1,
-        moduleRef: 'Modul 1 · Konsep Dasar',
+        moduleId: 2,
+        moduleRef: 'Modul 2 · Konsep Dasar',
         question: 'Berdasarkan materi Bimtek SD 2026, apa definisi paling tepat dari Bahan Ajar Interaktif Berbasis Digital?',
         options: [
           'Bahan ajar video animasi yang diputar satu arah tanpa henti sampai bel pulang sekolah berbunyi.',
@@ -283,8 +593,8 @@ export const LMS_MODULES: ModuleItem[] = [
       },
       {
         id: 102,
-        moduleId: 1,
-        moduleRef: 'Modul 1 · Ciri Interaktif',
+        moduleId: 2,
+        moduleRef: 'Modul 2 · Ciri Interaktif',
         question: 'Manakah di bawah ini yang BUKAN merupakan tiga ciri utama bahan ajar interaktif?',
         options: [
           'Membutuhkan aksi dari pengguna (klik, geser, ketik, pilih) agar materi bergerak atau menyajikan informasi baru.',
@@ -297,8 +607,8 @@ export const LMS_MODULES: ModuleItem[] = [
       },
       {
         id: 103,
-        moduleId: 1,
-        moduleRef: 'Modul 1 · Prinsip Pemilihan',
+        moduleId: 2,
+        moduleRef: 'Modul 2 · Prinsip Pemilihan',
         question: 'Prinsip "Bukan Sekadar Keren, Tapi Tepat Sasaran!" dalam pemilihan bahan ajar memiliki makna filosofis...',
         options: [
           'Guru harus selalu membeli aplikasi luar negeri termahal yang memiliki grafis 3D tercanggih.',
@@ -311,8 +621,8 @@ export const LMS_MODULES: ModuleItem[] = [
       },
       {
         id: 104,
-        moduleId: 1,
-        moduleRef: 'Modul 1 · Studi Kasus',
+        moduleId: 2,
+        moduleRef: 'Modul 2 · Studi Kasus',
         question: 'Pada studi kasus Bimtek SD, mengapa penggunaan Wordwall oleh Pak Dedi pada materi proses siklus air dinilai KURANG TEPAT?',
         options: [
           'Karena aplikasi Wordwall berbayar mahal dan tidak boleh digunakan di sekolah dasar.',
@@ -325,8 +635,8 @@ export const LMS_MODULES: ModuleItem[] = [
       },
       {
         id: 105,
-        moduleId: 1,
-        moduleRef: 'Modul 1 · Platform & Akses',
+        moduleId: 2,
+        moduleRef: 'Modul 2 · Platform & Akses',
         question: 'Apabila sebuah sekolah dasar memiliki keterbatasan jumlah gawai murid, langkah paling realistis dan inklusif sesuai materi Bimtek adalah...',
         options: [
           'Membatalkan seluruh rencana pembelajaran digital dan kembali mendikte catatan di papan tulis.',
@@ -340,22 +650,22 @@ export const LMS_MODULES: ModuleItem[] = [
     ]
   },
   {
-    id: 2,
-    code: 'MODUL 2',
+    id: 3,
+    code: 'MODUL 3',
     bimtekTitle: 'Bimtek Daerah Digitalisasi Pembelajaran SD 2026',
     title: 'Pengembangan dan Pembuatan Media Pembelajaran Interaktif',
     subtitle: 'Karakteristik MPI, siklus prinsip kerja, prinsip desain visual, dan kreasi Canva AI',
-    accentColor: 'orange',
+    accentColor: 'lime',
     description:
       'Menguasai 6 karakteristik MPI, siklus Input-Proses-Feedback-Coba Lagi, anti-pola desain (animasi berlebih & tanpa aksi), dan langkah pembuatan gim Canva AI.',
     quote: '“Media pembelajaran interaktif bukan sekadar tentang teknologi, tetapi tentang menciptakan pengalaman belajar yang membuat murid aktif, berpikir, dan bahagia dalam belajar.”',
     lessons: [
       {
-        id: 'm2-l1',
-        moduleId: 2,
-        moduleCode: 'MODUL 2',
+        id: 'm3-l1',
+        moduleId: 3,
+        moduleCode: 'MODUL 3',
         lessonNumber: 1,
-        globalIndex: 10,
+        globalIndex: 20,
         title: 'Urgensi Media Pembelajaran Interaktif di Era Digital',
         duration: '14 Menit',
         summary: 'Mengubah media biasa yang pasif menuju pembelajaran interaktif, mendalam, dan bermakna.',
@@ -372,11 +682,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Seberapa sering perangkat layar interaktif di sekolah Anda digunakan untuk interaksi murid dibanding sekadar tayangan guru?'
       },
       {
-        id: 'm2-l2',
-        moduleId: 2,
-        moduleCode: 'MODUL 2',
+        id: 'm3-l2',
+        moduleId: 3,
+        moduleCode: 'MODUL 3',
         lessonNumber: 2,
-        globalIndex: 11,
+        globalIndex: 21,
         title: 'Pengertian & Batasan Media Pembelajaran Interaktif (MPI)',
         duration: '13 Menit',
         summary: 'Bahan ajar digital bertema dengan pola interaksi dua arah, pilihan alur, dan umpan balik atas setiap interaksi.',
@@ -393,11 +703,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Bagian mana dari media yang biasa Anda buat yang paling membuat murid merasa memiliki kendali atas belajarnya?'
       },
       {
-        id: 'm2-l3',
-        moduleId: 2,
-        moduleCode: 'MODUL 2',
+        id: 'm3-l3',
+        moduleId: 3,
+        moduleCode: 'MODUL 3',
         lessonNumber: 3,
-        globalIndex: 12,
+        globalIndex: 22,
         title: 'Enam Karakteristik Media Pembelajaran Interaktif',
         duration: '15 Menit',
         summary: 'Interaktif, Partisipatif, Umpan Balik, Terarah, Multimedia, dan Bermakna.',
@@ -417,11 +727,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Dari 6 karakteristik MPI di atas, mana yang menurut Anda paling menantang untuk diwujudkan dalam pembuatan media?'
       },
       {
-        id: 'm2-l4',
-        moduleId: 2,
-        moduleCode: 'MODUL 2',
+        id: 'm3-l4',
+        moduleId: 3,
+        moduleCode: 'MODUL 3',
         lessonNumber: 4,
-        globalIndex: 13,
+        globalIndex: 23,
         title: 'Siklus Prinsip Kerja MPI: Contoh Metamorfosis Katak',
         duration: '16 Menit',
         summary: 'Proses berulang: Input Pengguna -> Proses Sistem -> Umpan Balik -> Coba Lagi -> Hasil Belajar.',
@@ -440,11 +750,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Bagaimana kata-kata umpan balik di media Anda dapat menumbuhkan semangat pantang menyerah pada murid?'
       },
       {
-        id: 'm2-l5',
-        moduleId: 2,
-        moduleCode: 'MODUL 2',
+        id: 'm3-l5',
+        moduleId: 3,
+        moduleCode: 'MODUL 3',
         lessonNumber: 5,
-        globalIndex: 14,
+        globalIndex: 24,
         title: 'Bentuk Interaksi & Contoh Penerapan Muatan Pelajaran',
         duration: '15 Menit',
         summary: 'Drag & Drop, Kuis Interaktif, Video Interaktif, Peta Interaktif, dan Lab Maya.',
@@ -463,11 +773,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Materi apa di kelas Anda yang paling cocok diubah menjadi aktivitas drag-and-drop di papan interaktif?'
       },
       {
-        id: 'm2-l6',
-        moduleId: 2,
-        moduleCode: 'MODUL 2',
+        id: 'm3-l6',
+        moduleId: 3,
+        moduleCode: 'MODUL 3',
         lessonNumber: 6,
-        globalIndex: 15,
+        globalIndex: 25,
         title: 'Tujuh Prinsip Mendesain Media Pembelajaran Interaktif',
         duration: '14 Menit',
         summary: 'Animasi sederhana, warna kontras, gambar edukatif, materi padat, kuis/game, bahasa sederhana, dan libatkan murid.',
@@ -488,11 +798,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Apakah media yang pernah Anda buat sudah menggunakan bahasa yang ringkas atau masih berupa paragraf buku yang disalin?'
       },
       {
-        id: 'm2-l7',
-        moduleId: 2,
-        moduleCode: 'MODUL 2',
+        id: 'm3-l7',
+        moduleId: 3,
+        moduleCode: 'MODUL 3',
         lessonNumber: 7,
-        globalIndex: 16,
+        globalIndex: 26,
         title: 'Hal-Hal yang Perlu Dihindari (Anti-Pola Desain)',
         duration: '13 Menit',
         summary: 'Hindari: animasi berlebih, fokus tampilan semata, media hanya jadi tontonan, tanpa aktivitas murid, dan tanpa feedback.',
@@ -511,11 +821,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Pernahkah Anda melihat media yang sangat bagus grafisnya tetapi membingungkan cara memainkannya? Apa yang salah?'
       },
       {
-        id: 'm2-l8',
-        moduleId: 2,
-        moduleCode: 'MODUL 2',
+        id: 'm3-l8',
+        moduleId: 3,
+        moduleCode: 'MODUL 3',
         lessonNumber: 8,
-        globalIndex: 17,
+        globalIndex: 27,
         title: 'Tahapan Pengembangan Media Pembelajaran Interaktif',
         duration: '15 Menit',
         summary: 'Analisis Kebutuhan -> Perancangan Alur (Flowchart) -> Pembuatan Aset -> Integrasi Interaksi -> Uji Coba.',
@@ -534,11 +844,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Tahap pengembangan mana yang paling sering Anda lewati saat terburu-buru menyiapkan media mengajar?'
       },
       {
-        id: 'm2-l9',
-        moduleId: 2,
-        moduleCode: 'MODUL 2',
+        id: 'm3-l9',
+        moduleId: 3,
+        moduleCode: 'MODUL 3',
         lessonNumber: 9,
-        globalIndex: 18,
+        globalIndex: 28,
         title: 'Pembuatan Gim Interaktif Menggunakan Canva AI',
         duration: '17 Menit',
         summary: 'Langkah praktis Canva AI Mode Kode: formula prompt terstruktur, komponen wajib MPI, dan pengujian tombol.',
@@ -556,11 +866,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Ide gim edukasi apa yang ingin segera Anda wujudkan menggunakan bantuan Canva AI?'
       },
       {
-        id: 'm2-l10',
-        moduleId: 2,
-        moduleCode: 'MODUL 2',
+        id: 'm3-l10',
+        moduleId: 3,
+        moduleCode: 'MODUL 3',
         lessonNumber: 10,
-        globalIndex: 19,
+        globalIndex: 29,
         title: 'Praktik & Refleksi Implementasi MPI di Sekolah',
         duration: '14 Menit',
         summary: 'Menyusun lembar kerja perancangan MPI, simulasi di kelas, dan komitmen menciptakan pembelajaran bermakna.',
@@ -581,8 +891,8 @@ export const LMS_MODULES: ModuleItem[] = [
     quiz: [
       {
         id: 201,
-        moduleId: 2,
-        moduleRef: 'Modul 2 · Karakteristik MPI',
+        moduleId: 3,
+        moduleRef: 'Modul 3 · Karakteristik MPI',
         question: 'Manakah pernyataan yang paling tepat mendeskripsikan karakteristik esensial dari Media Pembelajaran Interaktif (MPI)?',
         options: [
           'Media yang memiliki animasi 3D sebanyak mungkin agar murid terpesona meskipun tidak ada tombol interaksi.',
@@ -595,8 +905,8 @@ export const LMS_MODULES: ModuleItem[] = [
       },
       {
         id: 202,
-        moduleId: 2,
-        moduleRef: 'Modul 2 · Prinsip Kerja',
+        moduleId: 3,
+        moduleRef: 'Modul 3 · Prinsip Kerja',
         question: 'Pada siklus prinsip kerja MPI (contoh: metamorfosis katak), apa yang seharusnya terjadi jika murid memilih jawaban yang keliru?',
         options: [
           'Sistem langsung mematikan aplikasi dan memberikan nilai nol tanpa kesempatan mengulang.',
@@ -609,8 +919,8 @@ export const LMS_MODULES: ModuleItem[] = [
       },
       {
         id: 203,
-        moduleId: 2,
-        moduleRef: 'Modul 2 · Prinsip Desain',
+        moduleId: 3,
+        moduleRef: 'Modul 3 · Prinsip Desain',
         question: 'Berikut ini adalah hal-hal yang DIANJURKAN dalam mendesain media pembelajaran interaktif ramah anak SD, KECUALI...',
         options: [
           'Menggunakan warna kontras teks dan latar yang terjaga serta mudah dibaca.',
@@ -623,8 +933,8 @@ export const LMS_MODULES: ModuleItem[] = [
       },
       {
         id: 204,
-        moduleId: 2,
-        moduleRef: 'Modul 2 · Canva AI',
+        moduleId: 3,
+        moduleRef: 'Modul 3 · Canva AI',
         question: 'Prinsip utama yang paling menentukan keberhasilan dan kualitas media interaktif yang dibuat melalui Canva AI adalah...',
         options: [
           '"Kecepatan internet menentukan segalanya."',
@@ -637,8 +947,8 @@ export const LMS_MODULES: ModuleItem[] = [
       },
       {
         id: 205,
-        moduleId: 2,
-        moduleRef: 'Modul 2 · Komponen Wajib',
+        moduleId: 3,
+        moduleRef: 'Modul 3 · Komponen Wajib',
         question: 'Sebuah Media Pembelajaran Interaktif yang baik wajib memuat lima komponen utama, yaitu...',
         options: [
           'Logo sponsor, biodata keluarga guru, daftar harga barang, nomor telepon, dan iklan.',
@@ -652,22 +962,22 @@ export const LMS_MODULES: ModuleItem[] = [
     ]
   },
   {
-    id: 3,
-    code: 'MODUL 3',
+    id: 4,
+    code: 'MODUL 4',
     bimtekTitle: 'Bimtek Daerah Digitalisasi Pembelajaran SD 2026',
     title: 'Inspirasi Asesmen Berbasis Digital',
     subtitle: 'Backward Design, paradigma "Bisa Apa?", Formatif vs Sumatif, dan ragam platform digital',
-    accentColor: 'lime',
+    accentColor: 'mint',
     description:
       'Memahami Backward Design (analogi destinasi liburan), pergeseran "Nilai Berapa ke Bisa Apa", Permendikbud No. 21/2022, As/For/Of Learning, dan platform asesmen.',
     quote: '“Asesmen terbaik bukan tentang kecanggihannya, tetapi tentang seberapa besar ia membantu murid bertumbuh dalam belajar dan mencapai tujuan pembelajaran.”',
     lessons: [
       {
-        id: 'm3-l1',
-        moduleId: 3,
-        moduleCode: 'MODUL 3',
+        id: 'm4-l1',
+        moduleId: 4,
+        moduleCode: 'MODUL 4',
         lessonNumber: 1,
-        globalIndex: 20,
+        globalIndex: 30,
         title: 'Refleksi Perencanaan: Forward vs Backward Design',
         duration: '14 Menit',
         summary: 'Menghindari jebakan "cari kegiatan dulu" dengan menerapkan alur mundur Understanding by Design (UbD).',
@@ -684,11 +994,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Dalam kebiasaan mengajar Bapak/Ibu, apakah asesmen dirancang sebelum atau sesudah menyusun lembar aktivitas?'
       },
       {
-        id: 'm3-l2',
-        moduleId: 3,
-        moduleCode: 'MODUL 3',
+        id: 'm4-l2',
+        moduleId: 4,
+        moduleCode: 'MODUL 4',
         lessonNumber: 2,
-        globalIndex: 21,
+        globalIndex: 31,
         title: 'Analogi Destinasi Liburan dalam Asesmen Pembelajaran',
         duration: '13 Menit',
         summary: 'Tujuan (Destinasi), Asesmen (Bukti Foto di Lokasi), dan Kegiatan Belajar (Kendaraan Perjalanan).',
@@ -706,11 +1016,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Apakah bukti asesmen yang biasa Anda tagih ke murid sudah seperti "foto di lokasi tujuan" atau baru foto di terminal?'
       },
       {
-        id: 'm3-l3',
-        moduleId: 3,
-        moduleCode: 'MODUL 3',
+        id: 'm4-l3',
+        moduleId: 4,
+        moduleCode: 'MODUL 4',
         lessonNumber: 3,
-        globalIndex: 22,
+        globalIndex: 32,
         title: 'Membangun Pemahaman Bermakna (Enduring Understanding)',
         duration: '14 Menit',
         summary: 'Mengonstruksi pemahaman penting yang tetap diingat dan dibawa murid seumur hidupnya.',
@@ -727,11 +1037,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Konsep apa dari mata pelajaran Anda yang paling ingin Anda lihat terus dipraktikkan murid hingga mereka dewasa?'
       },
       {
-        id: 'm3-l4',
-        moduleId: 3,
-        moduleCode: 'MODUL 3',
+        id: 'm4-l4',
+        moduleId: 4,
+        moduleCode: 'MODUL 4',
         lessonNumber: 4,
-        globalIndex: 23,
+        globalIndex: 33,
         title: 'Pergeseran Paradigma: "Bisa Apa?" dan "Create Expert"',
         duration: '15 Menit',
         summary: 'Beralih dari "Nilai Berapa?" ke "Bisa Apa?", serta dari "To Rank" (membuat peringkat) ke "Create Expert" (membuat ahli).',
@@ -748,11 +1058,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Bagaimana perasaan murid di kelas Anda yang biasanya mendapat nilai rendah saat cara pandang "Bisa Apa?" diterapkan?'
       },
       {
-        id: 'm3-l5',
-        moduleId: 3,
-        moduleCode: 'MODUL 3',
+        id: 'm4-l5',
+        moduleId: 4,
+        moduleCode: 'MODUL 4',
         lessonNumber: 5,
-        globalIndex: 24,
+        globalIndex: 34,
         title: 'Konsep Dasar Asesmen & Tiga Prinsip Penilaian',
         duration: '15 Menit',
         summary: 'Permendikbud No. 21 Tahun 2022: Tiga prinsip utama Berkeadilan, Edukatif, dan Objektif.',
@@ -770,11 +1080,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Apakah penilaian yang Anda lakukan selama ini sudah bebas dari bias kedekatan pribadi dengan murid atau orang tuanya?'
       },
       {
-        id: 'm3-l6',
-        moduleId: 3,
-        moduleCode: 'MODUL 3',
+        id: 'm4-l6',
+        moduleId: 4,
+        moduleCode: 'MODUL 4',
         lessonNumber: 6,
-        globalIndex: 25,
+        globalIndex: 35,
         title: 'Membedah Asesmen Formatif vs Sumatif',
         duration: '16 Menit',
         summary: 'Formatif (Rambu Perjalanan) memantau proses vs Sumatif (Akhir Tujuan) menilai ketercapaian akhir.',
@@ -792,11 +1102,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Berapa persen waktu mengajar Anda yang dialokasikan untuk asesmen formatif dibanding hanya menunggu ulangan akhir?'
       },
       {
-        id: 'm3-l7',
-        moduleId: 3,
-        moduleCode: 'MODUL 3',
+        id: 'm4-l7',
+        moduleId: 4,
+        moduleCode: 'MODUL 4',
         lessonNumber: 7,
-        globalIndex: 26,
+        globalIndex: 36,
         title: 'Tiga Fungsi Asesmen: As, For, dan Of Learning',
         duration: '15 Menit',
         summary: 'Assessment as Learning (refleksi diri), for Learning (perbaikan mengajar), dan of Learning (evaluasi sumatif).',
@@ -813,11 +1123,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Apakah murid di kelas Anda sudah pernah dilatih untuk menilai karyanya sendiri secara jujur?'
       },
       {
-        id: 'm3-l8',
-        moduleId: 3,
-        moduleCode: 'MODUL 3',
+        id: 'm4-l8',
+        moduleId: 4,
+        moduleCode: 'MODUL 4',
         lessonNumber: 8,
-        globalIndex: 27,
+        globalIndex: 37,
         title: 'Ragam Teknik Asesmen Konvensional & Otentik',
         duration: '15 Menit',
         summary: 'Observasi, Lisan, Kinerja, Tes Tertulis, Penugasan, Portofolio, Penilaian Diri, dan Projek.',
@@ -835,11 +1145,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Teknik asesmen mana di luar tes tertulis yang paling memberikan informasi kaya tentang bakat murid Anda?'
       },
       {
-        id: 'm3-l9',
-        moduleId: 3,
-        moduleCode: 'MODUL 3',
+        id: 'm4-l9',
+        moduleId: 4,
+        moduleCode: 'MODUL 4',
         lessonNumber: 9,
-        globalIndex: 28,
+        globalIndex: 38,
         title: 'Integrasi Asesmen Konvensional vs Asesmen Digital',
         duration: '14 Menit',
         summary: '"Konvensional bukan berarti ketinggalan zaman." Gunakan sesuai tujuan, fungsi, dan kondisi kelas.',
@@ -856,11 +1166,11 @@ export const LMS_MODULES: ModuleItem[] = [
         reflectionPrompt: 'Kapan saat paling tepat menggunakan penilaian non-digital dibandingkan platform digital di sekolah Anda?'
       },
       {
-        id: 'm3-l10',
-        moduleId: 3,
-        moduleCode: 'MODUL 3',
+        id: 'm4-l10',
+        moduleId: 4,
+        moduleCode: 'MODUL 4',
         lessonNumber: 10,
-        globalIndex: 29,
+        globalIndex: 39,
         title: 'Inspirasi Platform Asesmen Digital & Refleksi Akhir',
         duration: '16 Menit',
         summary: 'Wayground, Google Form, Kahoot, Wordwall, Ruang Murid, dan komitmen evaluasi bermakna.',
@@ -880,8 +1190,8 @@ export const LMS_MODULES: ModuleItem[] = [
     quiz: [
       {
         id: 301,
-        moduleId: 3,
-        moduleRef: 'Modul 3 · Backward Design',
+        moduleId: 4,
+        moduleRef: 'Modul 4 · Backward Design',
         question: 'Dalam pendekatan Backward Design (Understanding by Design / UbD), urutan perancangan pembelajaran yang benar adalah...',
         options: [
           'Mencari game seru dulu -> Menentukan jam istirahat -> Menulis tujuan pembelajaran.',
@@ -894,8 +1204,8 @@ export const LMS_MODULES: ModuleItem[] = [
       },
       {
         id: 302,
-        moduleId: 3,
-        moduleRef: 'Modul 3 · Analogi Konsep',
+        moduleId: 4,
+        moduleRef: 'Modul 4 · Analogi Konsep',
         question: 'Pada analogi Destinasi Liburan dalam perencanaan asesmen, posisi "Hasil Foto di Lokasi Wisata" melambangkan...',
         options: [
           'Tujuan Pembelajaran yang ingin dicapai.',
@@ -908,8 +1218,8 @@ export const LMS_MODULES: ModuleItem[] = [
       },
       {
         id: 303,
-        moduleId: 3,
-        moduleRef: 'Modul 3 · Paradigma Asesmen',
+        moduleId: 4,
+        moduleRef: 'Modul 4 · Paradigma Asesmen',
         question: 'Salah satu pergeseran paradigma asesmen yang ditekankan dalam materi Bimtek SD 2026 adalah...',
         options: [
           'Bergeser dari pertanyaan "Bisa Apa?" menjadi sekadar mengejar "Nilai Berapa?".',
@@ -922,8 +1232,8 @@ export const LMS_MODULES: ModuleItem[] = [
       },
       {
         id: 304,
-        moduleId: 3,
-        moduleRef: 'Modul 3 · Formatif vs Sumatif',
+        moduleId: 4,
+        moduleRef: 'Modul 4 · Formatif vs Sumatif',
         question: 'Asesmen yang berfungsi sebagai "rambu perjalanan" untuk memantau proses belajar dan memperbaiki strategi mengajar guru disebut...',
         options: [
           'Asesmen Sumatif Akhir Jenjang.',
@@ -936,8 +1246,8 @@ export const LMS_MODULES: ModuleItem[] = [
       },
       {
         id: 305,
-        moduleId: 3,
-        moduleRef: 'Modul 3 · Konvensional vs Digital',
+        moduleId: 4,
+        moduleRef: 'Modul 4 · Konvensional vs Digital',
         question: 'Pernyataan paling bijak mengenai integrasi asesmen konvensional (non-digital) dan asesmen digital di sekolah dasar adalah...',
         options: [
           'Asesmen konvensional harus dimusnahkan karena dianggap terbelakang dan kuno.',

@@ -53,7 +53,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           </span>
           <span className="text-white/60">•</span>
           <span className="text-[#FBF7EC]">
-            3 MODUL LENGKAP & 30 MATERI INTERAKTIF TERSTRUKTUR
+            4 MODUL LENGKAP & 40 MATERI INTERAKTIF TERSTRUKTUR
           </span>
           <span className="text-white/60">•</span>
           <span className="text-[#C6F63D]">
@@ -143,13 +143,13 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
             <div className="pt-4 grid grid-cols-3 gap-3 border-t-2 border-[#0B1B8C]/15">
               <div className="text-center lg:text-left">
                 <div className="font-display text-2xl sm:text-3xl font-bold text-[#0B1B8C] font-mono-num">
-                  3 Modul
+                  4 Modul
                 </div>
                 <div className="text-[11px] font-bold text-slate-500">Kurikulum Bimtek</div>
               </div>
               <div className="text-center lg:text-left">
                 <div className="font-display text-2xl sm:text-3xl font-bold text-[#F95716] font-mono-num">
-                  30 Materi
+                  40 Materi
                 </div>
                 <div className="text-[11px] font-bold text-slate-500">Refleksi Terkunci</div>
               </div>
@@ -220,7 +220,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
               <span>KURIKULUM RESMI BIMTEK 2026</span>
             </div>
             <h2 className="font-display text-2xl sm:text-4xl font-bold mt-1">
-              Jelajahi 3 Modul Kompetensi Guru
+              Jelajahi 4 Modul Kompetensi Guru
             </h2>
             <p className="text-xs sm:text-sm text-white/90 mt-1 max-w-xl">
               Setiap modul memuat 10 materi terstruktur dengan tip praktis, poin kunci, dan kuis evaluasi HOTS studi kasus.

@@ -4,6 +4,7 @@ import { jsPDF } from 'jspdf';
 import { CheckCircle2, Download, Loader2, Lock, ShieldCheck, Sparkles } from 'lucide-react';
 import { UserProfile, syncToGoogleSheet } from '../services/gasApi';
 import logoTutWuri from '../assets/images/tut_wuri_handayani_logo_1791129005206.jpg';
+import { LMS_MODULES } from '../data/lmsContent';
 
 interface CertificateViewProps {
   user: UserProfile;
@@ -112,48 +113,27 @@ export const CertificateView: React.FC<CertificateViewProps> = ({
             Sertifikat Digital Belum Terbuka
           </h2>
           <p className="mt-2 text-sm md:text-base text-slate-700 leading-relaxed">
-            Untuk mengklaim dan mengunduh Sertifikat Resmi Workshop Aksi Praktis yang Kreatif dan Inovatif Berbasis Digitalisasi (32 JP), Anda perlu menyelesaikan seluruh materi serta <strong>lulus Kuis di setiap modul (Modul 1, Modul 2, dan Modul 3) dengan nilai minimal 80%</strong>.
+            Untuk mengklaim dan mengunduh Sertifikat Resmi Workshop Aksi Praktis yang Kreatif dan Inovatif Berbasis Digitalisasi (32 JP), Anda perlu menyelesaikan seluruh materi serta <strong>lulus Kuis di setiap modul (Modul 1 s.d. Modul {LMS_MODULES.length}) dengan nilai minimal 80%</strong>.
           </p>
 
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
-            <div className="bg-white rounded-2xl p-3.5 border-2 border-[#0B1B8C]/15">
-              <div className="text-[11px] font-bold text-slate-500">KUIS MODUL 1</div>
-              <div className="text-lg font-bold font-mono-num mt-1">
-                {moduleScores[1] !== undefined ? (
-                  <span className={moduleScores[1] >= 80 ? 'text-[#059669]' : 'text-[#F95716]'}>
-                    {moduleScores[1]}% {moduleScores[1] >= 80 ? '✓' : '(Belum Lulus)'}
-                  </span>
-                ) : (
-                  <span className="text-slate-400">Belum Ujian</span>
-                )}
-              </div>
-            </div>
-
-            <div className="bg-white rounded-2xl p-3.5 border-2 border-[#0B1B8C]/15">
-              <div className="text-[11px] font-bold text-slate-500">KUIS MODUL 2</div>
-              <div className="text-lg font-bold font-mono-num mt-1">
-                {moduleScores[2] !== undefined ? (
-                  <span className={moduleScores[2] >= 80 ? 'text-[#059669]' : 'text-[#F95716]'}>
-                    {moduleScores[2]}% {moduleScores[2] >= 80 ? '✓' : '(Belum Lulus)'}
-                  </span>
-                ) : (
-                  <span className="text-slate-400">Belum Ujian</span>
-                )}
-              </div>
-            </div>
-
-            <div className="bg-white rounded-2xl p-3.5 border-2 border-[#0B1B8C]/15">
-              <div className="text-[11px] font-bold text-slate-500">KUIS MODUL 3</div>
-              <div className="text-lg font-bold font-mono-num mt-1">
-                {moduleScores[3] !== undefined ? (
-                  <span className={moduleScores[3] >= 80 ? 'text-[#059669]' : 'text-[#F95716]'}>
-                    {moduleScores[3]}% {moduleScores[3] >= 80 ? '✓' : '(Belum Lulus)'}
-                  </span>
-                ) : (
-                  <span className="text-slate-400">Belum Ujian</span>
-                )}
-              </div>
-            </div>
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-left">
+            {LMS_MODULES.map((mod) => {
+              const score = moduleScores[mod.id];
+              return (
+                <div key={mod.id} className="bg-white rounded-2xl p-3.5 border-2 border-[#0B1B8C]/15">
+                  <div className="text-[11px] font-bold text-slate-500 uppercase">KUIS {mod.code}</div>
+                  <div className="text-lg font-bold font-mono-num mt-1">
+                    {score !== undefined ? (
+                      <span className={score >= 80 ? 'text-[#059669]' : 'text-[#F95716]'}>
+                        {score}% {score >= 80 ? '✓' : '(Belum Lulus)'}
+                      </span>
+                    ) : (
+                      <span className="text-slate-400">Belum Ujian</span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">

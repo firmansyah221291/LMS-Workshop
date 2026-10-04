@@ -259,15 +259,15 @@ export default function App() {
 
   const progressPercentage = Math.round((totalFinishedLessons / ALL_LESSONS.length) * 100);
 
-  // Check if all 3 modules have passed score (>= 80%)
+  // Check if all modules have passed score (>= 80%)
   const allModulesPassed = useMemo(() => {
-    return [1, 2, 3].every((modId) => (moduleScores[modId] ?? 0) >= 80);
+    return LMS_MODULES.every((mod) => (moduleScores[mod.id] ?? 0) >= 80);
   }, [moduleScores]);
 
   const averageScore = useMemo(() => {
-    const scores = [1, 2, 3].map((id) => moduleScores[id] ?? 0);
+    const scores = LMS_MODULES.map((m) => moduleScores[m.id] ?? 0);
     const sum = scores.reduce((a, b) => a + b, 0);
-    return Math.round(sum / 3);
+    return Math.round(sum / (LMS_MODULES.length || 1));
   }, [moduleScores]);
 
   // Handlers
@@ -754,7 +754,7 @@ export default function App() {
                   : 'opacity-75 hover:opacity-100'
               }`}
             >
-              Ruang Belajar (3 Modul)
+              Ruang Belajar (4 Modul)
             </button>
             <button
               onClick={() => setActiveView('kuis')}
@@ -960,7 +960,7 @@ export default function App() {
                         <strong>Kuis Modul:</strong> Wajib menyelesaikan materi 1 s.d. 10 secara utuh sebelum dapat mengakses kuis.
                       </li>
                       <li>
-                        <strong>Sertifikat:</strong> Lulus kuis di 3 modul (skor minimal 80%).
+                        <strong>Sertifikat:</strong> Lulus kuis di 4 modul (skor minimal 80%).
                       </li>
                     </ul>
                   </div>
@@ -1034,18 +1034,20 @@ export default function App() {
                 </div>
               </div>
 
-              {/* 3 Bento Cards for Modul 1, Modul 2, Modul 3 */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+              {/* Bento Cards for 4 Modul */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
                 {LMS_MODULES.map((mod) => {
                   const modFinishedCount = getModuleFinishedCount(mod.id);
                   const score = moduleScores[mod.id];
                   const quizUnlocked = isModuleQuizUnlocked(mod.id);
                   const bgClass =
-                    mod.accentColor === 'mint'
-                      ? 'bg-[#95E18D] text-[#0B1B8C]'
+                    mod.accentColor === 'blue'
+                      ? 'bg-[#5B6CFA] text-white'
                       : mod.accentColor === 'orange'
                       ? 'bg-[#F95716] text-white'
-                      : 'bg-[#C6F63D] text-[#0B1B8C]';
+                      : mod.accentColor === 'lime'
+                      ? 'bg-[#C6F63D] text-[#0B1B8C]'
+                      : 'bg-[#95E18D] text-[#0B1B8C]';
 
                   return (
                     <div
@@ -1124,12 +1126,12 @@ export default function App() {
                   </span>
                 ) : (
                   <span className="px-3 py-1.5 rounded-xl bg-[#F95716] text-white text-xs font-bold">
-                    Perlu Kelulusan di 3 Modul
+                    Perlu Kelulusan di 4 Modul
                   </span>
                 )}
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 {LMS_MODULES.map((mod) => {
                   const score = moduleScores[mod.id];
                   const passed = (score ?? 0) >= 80;
