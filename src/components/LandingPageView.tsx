@@ -31,6 +31,9 @@ interface LandingPageViewProps {
   onInstall: () => void;
 }
 
+const OFFICIAL_DEVELOPER_PHOTO = '/Achmad Firmansyah.png';
+const BACKUP_DEVELOPER_PHOTO = 'https://i.ibb.co.com/rGG6sMrd/Achmad-Firmansyah.png';
+
 export const LandingPageView: React.FC<LandingPageViewProps> = ({
   onStartLearning,
   onOpenDeveloper,
@@ -38,34 +41,6 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
   onInstall,
 }) => {
   const [activePreviewTab, setActivePreviewTab] = useState<number>(1);
-  const [devPhotoUrl, setDevPhotoUrl] = useState<string>(() => {
-    try {
-      const saved =
-        localStorage.getItem('edupro_developer_photo_original') ||
-        localStorage.getItem('edupro_developer_photo') ||
-        localStorage.getItem('edupro_developer_custom_photo');
-      if (saved) return saved;
-    } catch {}
-    return '/Achmad Firmansyah.png';
-  });
-
-  React.useEffect(() => {
-    const handleUpdate = () => {
-      try {
-        const saved =
-          localStorage.getItem('edupro_developer_photo_original') ||
-          localStorage.getItem('edupro_developer_photo') ||
-          localStorage.getItem('edupro_developer_custom_photo');
-        if (saved) setDevPhotoUrl(saved);
-      } catch {}
-    };
-    window.addEventListener('edupro-developer-photo-updated', handleUpdate);
-    window.addEventListener('storage', handleUpdate);
-    return () => {
-      window.removeEventListener('edupro-developer-photo-updated', handleUpdate);
-      window.removeEventListener('storage', handleUpdate);
-    };
-  }, []);
 
   return (
     <div className="space-y-12 pb-8">
@@ -383,10 +358,12 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
         <div className="flex items-center gap-4">
           <div className="w-20 h-24 rounded-2xl overflow-hidden border-3 border-[#0B1B8C] bg-red-600 shrink-0 shadow-md">
             <img
-              src={devPhotoUrl}
+              src={developerPhoto}
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                if (target.src !== developerPhoto) target.src = developerPhoto;
+                if (target.src !== BACKUP_DEVELOPER_PHOTO) {
+                  target.src = BACKUP_DEVELOPER_PHOTO;
+                }
               }}
               alt="Achmad Firmansyah"
               referrerPolicy="no-referrer"

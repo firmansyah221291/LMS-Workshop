@@ -131,20 +131,12 @@ export default function App() {
   const [selectedLessonId, setSelectedLessonId] = useState<string>('m1-l1');
   const [quizActiveModuleId, setQuizActiveModuleId] = useState<number>(1);
 
-  // Auto-sync foto pengembang asli ke server disk jika ada di localStorage
+  // Bersihkan cache foto lama agar seluruh user (terdaftar maupun belum) mendapatkan foto resmi terbaru
   useEffect(() => {
     try {
-      const savedDevPhoto =
-        localStorage.getItem('edupro_developer_photo_original') ||
-        localStorage.getItem('edupro_developer_photo') ||
-        localStorage.getItem('edupro_developer_custom_photo');
-      if (savedDevPhoto && savedDevPhoto.startsWith('data:image/')) {
-        fetch('/api/save-developer-photo', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ image: savedDevPhoto }),
-        }).catch(() => {});
-      }
+      localStorage.removeItem('edupro_developer_photo_original');
+      localStorage.removeItem('edupro_developer_photo');
+      localStorage.removeItem('edupro_developer_custom_photo');
     } catch {}
   }, []);
 

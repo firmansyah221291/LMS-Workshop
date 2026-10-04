@@ -19,44 +19,20 @@ import {
 } from 'lucide-react';
 import developerPhotoDefault from '../assets/images/achmad_firmansyah_portrait_1791055408919.jpg';
 
+const OFFICIAL_DEVELOPER_PHOTO: string = '/Achmad Firmansyah.png';
+const BACKUP_DEVELOPER_PHOTO: string = 'https://i.ibb.co.com/rGG6sMrd/Achmad-Firmansyah.png';
+
 interface DeveloperInfoViewProps {
   onNavigateLearn: () => void;
 }
 
 export const DeveloperInfoView: React.FC<DeveloperInfoViewProps> = ({ onNavigateLearn }) => {
-  // Ambil foto yang sekarang aktif (custom photo yang tersimpan di localStorage atau foto resmi publik)
-  const [photoUrl, setPhotoUrl] = useState<string>(() => {
-    try {
-      const saved =
-        localStorage.getItem('edupro_developer_photo_original') ||
-        localStorage.getItem('edupro_developer_photo') ||
-        localStorage.getItem('edupro_developer_custom_photo');
-      if (saved) return saved;
-    } catch {}
-    return '/Achmad Firmansyah.png';
-  });
-
-  // Auto-sync ke server disk jika ada foto di localStorage yang belum tersimpan di berkas
+  // Bersihkan cache foto lama agar seluruh user otomatis mendapatkan foto resmi terbaru
   useEffect(() => {
     try {
-      const saved =
-        localStorage.getItem('edupro_developer_photo_original') ||
-        localStorage.getItem('edupro_developer_photo') ||
-        localStorage.getItem('edupro_developer_custom_photo');
-      if (saved && saved.startsWith('data:image/')) {
-        fetch('/api/save-developer-photo', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ image: saved }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.success) {
-              console.log('Developer photo synced to disk:', data.message);
-            }
-          })
-          .catch(() => {});
-      }
+      localStorage.removeItem('edupro_developer_photo_original');
+      localStorage.removeItem('edupro_developer_photo');
+      localStorage.removeItem('edupro_developer_custom_photo');
     } catch {}
   }, []);
 
@@ -75,12 +51,11 @@ export const DeveloperInfoView: React.FC<DeveloperInfoViewProps> = ({ onNavigate
             <div className="relative">
               <div className="w-56 sm:w-64 aspect-[3/4] rounded-3xl overflow-hidden border-4 border-[#0B1B8C] shadow-2xl bg-red-600 relative">
                 <img
-                  src={photoUrl}
+                  src={developerPhotoDefault}
                   onError={(e) => {
-                    // Fallback if public path is not yet cached
                     const target = e.target as HTMLImageElement;
-                    if (target.src !== developerPhotoDefault) {
-                      target.src = developerPhotoDefault;
+                    if (target.src !== BACKUP_DEVELOPER_PHOTO) {
+                      target.src = BACKUP_DEVELOPER_PHOTO;
                     }
                   }}
                   alt="Achmad Firmansyah - Pengembang EduPro PWA"
