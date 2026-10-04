@@ -13,6 +13,7 @@ import {
   HelpCircle,
   Home,
   IdCard,
+  Lightbulb,
   Lock,
   LogOut,
   RefreshCw,
@@ -45,7 +46,7 @@ const STORAGE_KEYS = {
   USER: 'edupro_pwa_user_v2',
   COMPLETED: 'edupro_pwa_completed_v2',
   MODULE_SCORES: 'edupro_pwa_mod_scores_v2',
-  REFLECTIONS: 'edupro_pwa_reflections_v2',
+  REFLECTIONS: 'edupro_pwa_reflections_v3',
 };
 
 const DEFAULT_DEVELOPER_PROFILE = {
@@ -63,20 +64,6 @@ const DEMO_TEACHERS: Array<Omit<UserProfile, 'id' | 'loginAt'>> = [
     email: 'achmadfirmansyah221@guru.sd.belajar.id',
     instansi: 'SD Negeri 2 Mojosari, Kec. Asembagus Kab. Situbondo',
     role: 'Pengembang Aplikasi & Guru SD',
-  },
-  {
-    name: 'Hj. Siti Nurhaliza, M.Pd.',
-    nip: '19850921 201001 2 009',
-    email: 'siti.nurhaliza@guru.sd.belajar.id',
-    instansi: 'SD Negeri 05 Nusantara',
-    role: 'Guru Penggerak & Fasilitator IT',
-  },
-  {
-    name: 'Drs. Budi Santoso, M.M.',
-    nip: '19761103 200312 1 001',
-    email: 'budi.santoso@admin.sd.belajar.id',
-    instansi: 'SD Negeri Harapan Bangsa',
-    role: 'Kepala Satuan Pendidikan',
   },
 ];
 
@@ -111,8 +98,28 @@ export default function App() {
 
   const [reflections, setReflections] = useState<Record<string, string>>(() => {
     try {
+      // Bersihkan cache refleksi otomatis lama dari localStorage
+      const oldKeys = ['edupro_pwa_reflections_v1', 'edupro_pwa_reflections_v2', 'edupro_pwa_reflections'];
+      for (const ok of oldKeys) {
+        try { localStorage.removeItem(ok); } catch {}
+      }
+
       const saved = localStorage.getItem(STORAGE_KEYS.REFLECTIONS);
-      return saved ? JSON.parse(saved) : {};
+      if (!saved) return {};
+      const parsed = JSON.parse(saved);
+      const cleaned: Record<string, string> = {};
+      for (const [k, v] of Object.entries(parsed)) {
+        if (typeof v === 'string') {
+          const lower = v.toLowerCase();
+          // Hapus jika ada teks otomatis dummy
+          if (lower.includes('sangat aplikatif') || lower.startsWith('refleksi materi')) {
+            cleaned[k] = '';
+          } else {
+            cleaned[k] = v;
+          }
+        }
+      }
+      return cleaned;
     } catch {
       return {};
     }
@@ -181,7 +188,15 @@ export default function App() {
 
   const isLessonReflectionFilled = (lessonId: string): boolean => {
     const text = reflections[lessonId];
-    return Boolean(text && text.trim().length > 0);
+    if (!text) return false;
+    const trimmed = text.trim();
+    if (
+      trimmed.toLowerCase().includes('sangat aplikatif') ||
+      trimmed.toLowerCase().startsWith('refleksi materi')
+    ) {
+      return false;
+    }
+    return trimmed.length > 0;
   };
 
   const isLessonFinished = (lessonId: string): boolean => {
@@ -427,12 +442,82 @@ export default function App() {
     else setShowInstallModal(true);
   };
 
+  // Komponen Mobile Bottom Navigation Bar (Home / Beranda, Buku / Modul & Kuis, Lampu / Sertifikat)
+  const renderMobileBottomBar = () => (
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FFFDF7]/95 backdrop-blur-md border-t-2 border-[#0B1B8C] px-3 py-2 shadow-[0_-4px_20px_rgba(11,27,140,0.18)]">
+      <div className="max-w-md mx-auto grid grid-cols-3 gap-2">
+        {/* 1. Tombol Icon Home (Beranda) */}
+        <button
+          type="button"
+          onClick={() => {
+            if (user) {
+              setActiveView('dashboard');
+            } else {
+              setActiveView('dashboard');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className={`flex flex-col items-center justify-center py-1.5 px-2 rounded-xl transition cursor-pointer ${
+            (!user && activeView !== 'pengembang') || (user && activeView === 'dashboard')
+              ? 'bg-[#C6F63D] text-[#0B1B8C] font-extrabold border-2 border-[#0B1B8C] shadow-sm'
+              : 'text-slate-600 hover:text-[#0B1B8C]'
+          }`}
+        >
+          <Home className="w-5 h-5 mb-0.5" />
+          <span className="text-[11px] font-bold">Beranda</span>
+        </button>
+
+        {/* 2. Tombol Icon Buku (Modul & Kuis) */}
+        <button
+          type="button"
+          onClick={() => {
+            if (!user) {
+              setShowLoginModal(true);
+            } else {
+              setActiveView('materi');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className={`flex flex-col items-center justify-center py-1.5 px-2 rounded-xl transition cursor-pointer ${
+            user && (activeView === 'materi' || activeView === 'kuis')
+              ? 'bg-[#C6F63D] text-[#0B1B8C] font-extrabold border-2 border-[#0B1B8C] shadow-sm'
+              : 'text-slate-600 hover:text-[#0B1B8C]'
+          }`}
+        >
+          <BookOpen className="w-5 h-5 mb-0.5" />
+          <span className="text-[11px] font-bold">Modul & Kuis</span>
+        </button>
+
+        {/* 3. Tombol Icon Lampu (Sertifikat) */}
+        <button
+          type="button"
+          onClick={() => {
+            if (!user) {
+              setShowLoginModal(true);
+            } else {
+              setActiveView('sertifikat');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className={`flex flex-col items-center justify-center py-1.5 px-2 rounded-xl transition cursor-pointer ${
+            user && activeView === 'sertifikat'
+              ? 'bg-[#C6F63D] text-[#0B1B8C] font-extrabold border-2 border-[#0B1B8C] shadow-sm'
+              : 'text-slate-600 hover:text-[#0B1B8C]'
+          }`}
+        >
+          <Lightbulb className="w-5 h-5 mb-0.5" />
+          <span className="text-[11px] font-bold">Sertifikat</span>
+        </button>
+      </div>
+    </nav>
+  );
+
   // ============================================================================
   // LANDING PAGE SCREEN UNTUK PENGUNJUNG SEBELUM MASUK / LOGIN
   // ============================================================================
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#5B6CFA] text-[#0B1B8C] px-4 sm:px-8 py-6 flex flex-col justify-between">
+      <div className="min-h-screen bg-[#5B6CFA] text-[#0B1B8C] px-4 sm:px-8 py-6 pb-24 md:pb-6 flex flex-col justify-between">
         {/* Navigation Bar for Landing Page */}
         <header className="max-w-6xl w-full mx-auto bg-[#C6F63D] border-2 border-[#0B1B8C] rounded-2xl px-5 py-3.5 shadow-md flex items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-3">
@@ -506,31 +591,42 @@ export default function App() {
                 </p>
               </div>
 
-              {/* Profil Cepat Pengembang / Guru */}
+              {/* Profil Cepat Pengembang / Guru (Hanya Profil 1) */}
               <div className="mb-4">
                 <div className="text-[11px] font-bold text-white/90 mb-2">
-                  PILIH CONTOH PROFIL CEPAT:
+                  PILIH CONTOH PROFIL CEPAT (DEMO):
                 </div>
-                <div className="grid grid-cols-3 gap-2">
-                  {DEMO_TEACHERS.map((t, idx) => (
-                    <button
-                      key={t.email}
-                      type="button"
-                      onClick={() => {
-                        setLoginName(t.name);
-                        setLoginNip(t.nip);
-                        setLoginEmail(t.email);
-                        setLoginInstansi(t.instansi);
-                      }}
-                      className="bg-[#FBF7EC] hover:bg-[#C6F63D] border-2 border-[#0B1B8C] rounded-2xl p-2 text-center transition cursor-pointer"
-                    >
-                      <div className="text-[10px] font-bold text-[#F95716]">Profil {idx + 1}</div>
-                      <div className="text-[11px] font-extrabold text-[#0B1B8C] truncate">
-                        {t.name.split(',')[0]}
+                {DEMO_TEACHERS.map((t) => (
+                  <button
+                    key={t.email}
+                    type="button"
+                    onClick={() => {
+                      setLoginName(t.name);
+                      setLoginNip(t.nip);
+                      setLoginEmail(t.email);
+                      setLoginInstansi(t.instansi);
+                    }}
+                    className="w-full bg-[#FBF7EC] hover:bg-[#C6F63D] border-2 border-[#0B1B8C] rounded-2xl p-2.5 text-left transition cursor-pointer flex items-center justify-between gap-3 shadow-sm"
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="w-8 h-8 rounded-xl bg-[#0B1B8C] text-[#C6F63D] flex items-center justify-center font-bold text-xs shrink-0">
+                        1
                       </div>
-                    </button>
-                  ))}
-                </div>
+                      <div className="min-w-0">
+                        <div className="text-[10px] font-bold text-[#F95716] uppercase">Profil 1 · Pengembang Aplikasi</div>
+                        <div className="text-xs font-extrabold text-[#0B1B8C] truncate">
+                          {t.name}
+                        </div>
+                        <div className="text-[10px] text-slate-600 truncate">
+                          {t.instansi}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-[11px] font-extrabold text-[#0B1B8C] bg-[#C6F63D] px-2.5 py-1 rounded-lg border border-[#0B1B8C] shrink-0">
+                      Gunakan
+                    </div>
+                  </button>
+                ))}
               </div>
 
               <form onSubmit={handleLoginSubmit} className="space-y-3">
@@ -604,6 +700,9 @@ export default function App() {
             Pengembang: Achmad Firmansyah (SDN 2 Mojosari)
           </button>
         </footer>
+
+        {/* Mobile Bottom Navigation Bar pada Landing Page */}
+        {renderMobileBottomBar()}
       </div>
     );
   }
@@ -1231,7 +1330,13 @@ export default function App() {
                   <textarea
                     id="teacher-reflection-input"
                     rows={3}
-                    value={reflections[currentLesson.id] || ''}
+                    value={
+                      (reflections[currentLesson.id] &&
+                       !reflections[currentLesson.id].toLowerCase().includes('sangat aplikatif') &&
+                       !reflections[currentLesson.id].toLowerCase().startsWith('refleksi materi'))
+                        ? reflections[currentLesson.id]
+                        : ''
+                    }
                     onChange={(e) => {
                       setReflections((prev) => ({
                         ...prev,
@@ -1777,6 +1882,9 @@ export default function App() {
             Pengembang: Achmad Firmansyah — SD Negeri 2 Mojosari Situbondo
           </button>
         </footer>
+
+        {/* Mobile Bottom Navigation Bar */}
+        {renderMobileBottomBar()}
       </main>
 
       {/* iOS PWA Install Modal Helper */}

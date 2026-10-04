@@ -1,14 +1,15 @@
 import React, { useRef, useState } from 'react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
-import { Award, CheckCircle2, Download, Loader2, Lock, ShieldCheck, Sparkles } from 'lucide-react';
+import { CheckCircle2, Download, Loader2, Lock, ShieldCheck, Sparkles } from 'lucide-react';
 import { UserProfile, syncToGoogleSheet } from '../services/gasApi';
+import logoTutWuri from '../assets/images/tut_wuri_handayani_logo_1791129005206.jpg';
 
 interface CertificateViewProps {
   user: UserProfile;
   completedLessonsCount: number;
   totalLessons: number;
-  moduleScores: Record<number, number>; // { 5: 100, 6: 80, 7: 100 }
+  moduleScores: Record<number, number>; // { 1: 100, 2: 80, 3: 100 }
   averageScore: number;
   allModulesPassed: boolean;
   onNavigateQuiz: (moduleId?: number) => void;
@@ -44,7 +45,7 @@ export const CertificateView: React.FC<CertificateViewProps> = ({
       ? 'MEMUASKAN (KOMPETEN)'
       : 'BELUM LULUS';
 
-  const certId = `BIMTEK-SD-2026/DIGITAL/${user.id.slice(-6).toUpperCase()}`;
+  const certId = 'WORKSHOP-DIGITALISASI/ASEMBAGUS/X/2026';
   const qrVerificationData = encodeURIComponent(
     `https://rumah.pendidikan.go.id/verify?cert=${certId}&name=${user.name}&score=${averageScore}&instansi=${user.instansi}`
   );
@@ -79,7 +80,7 @@ export const CertificateView: React.FC<CertificateViewProps> = ({
       pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
 
       const safeName = user.name.replace(/[^a-zA-Z0-9]/g, '_');
-      pdf.save(`Sertifikat_Bimtek_SD_2026_${safeName}.pdf`);
+      pdf.save(`Sertifikat_Workshop_Digitalisasi_Asembagus_${safeName}.pdf`);
 
       const syncRes = await syncToGoogleSheet('claimCertificate', {
         email: user.email,
@@ -111,7 +112,7 @@ export const CertificateView: React.FC<CertificateViewProps> = ({
             Sertifikat Digital Belum Terbuka
           </h2>
           <p className="mt-2 text-sm md:text-base text-slate-700 leading-relaxed">
-            Untuk mengklaim dan mengunduh Sertifikat Resmi Bimtek Digitalisasi Pembelajaran SD (32 JP), Anda perlu menyelesaikan 30 materi serta <strong>lulus Kuis di setiap modul (Modul 1, Modul 2, dan Modul 3) dengan nilai minimal 80%</strong>.
+            Untuk mengklaim dan mengunduh Sertifikat Resmi Workshop Aksi Praktis yang Kreatif dan Inovatif Berbasis Digitalisasi (32 JP), Anda perlu menyelesaikan seluruh materi serta <strong>lulus Kuis di setiap modul (Modul 1, Modul 2, dan Modul 3) dengan nilai minimal 80%</strong>.
           </p>
 
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
@@ -184,10 +185,10 @@ export const CertificateView: React.FC<CertificateViewProps> = ({
             <span>LULUS SELURUH KUIS MODUL · RATA-RATA {averageScore}% · {predicate}</span>
           </div>
           <h2 className="font-display text-xl md:text-2xl font-bold text-[#0B1B8C] mt-1">
-            Generator Sertifikat Digital Resmi (32 JP)
+            Generator Sertifikat Workshop Digital (32 JP)
           </h2>
           <p className="text-xs md:text-sm text-slate-600 mt-0.5">
-            Bimbingan Teknis Daerah Digitalisasi Pembelajaran SD Tahun 2026. Siap diunduh ke PDF Lanskap A4.
+            Workshop Aksi Praktis yang Kreatif dan Inovatif Berbasis Digitalisasi — KKKS Kec. Asembagus. Siap diunduh ke PDF Lanskap A4.
           </p>
         </div>
 
@@ -242,24 +243,39 @@ export const CertificateView: React.FC<CertificateViewProps> = ({
               <div className="absolute bottom-2 left-2 w-6 h-6 border-b-4 border-l-4 border-[#D97706]" />
               <div className="absolute bottom-2 right-2 w-6 h-6 border-b-4 border-r-4 border-[#D97706]" />
 
-              {/* Top Header: Emblem & Institution */}
+              {/* Top Header: Emblem & Institution (KOP SERTIFIKAT) */}
               <div className="flex items-center justify-between border-b-2 border-[#D97706]/30 pb-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-14 h-14 rounded-2xl bg-[#1e40af] border-2 border-[#D97706] flex items-center justify-center text-[#C6F63D] shadow-sm">
-                    <Award className="w-8 h-8" />
+                <div className="flex items-center gap-3.5">
+                  {/* 1. LOGO SERTIFIKAT RESMI DARI FILE UPLOAD TUT WURI HANDAYANI */}
+                  <div className="w-16 h-16 rounded-2xl overflow-hidden bg-white border-2 border-[#D97706] p-1 flex items-center justify-center shadow-md shrink-0">
+                    <img
+                      src={logoTutWuri}
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        if (target.src !== '/cropped-Logo-Tut-Wuri-Handayani-PNG-Warna-1.webp') {
+                          target.src = '/cropped-Logo-Tut-Wuri-Handayani-PNG-Warna-1.webp';
+                        }
+                      }}
+                      alt="Logo Tut Wuri Handayani"
+                      className="w-full h-full object-contain"
+                    />
                   </div>
+
                   <div>
-                    <div className="text-xs font-bold tracking-widest text-[#B45309]">
-                      KEMENTERIAN PENDIDIKAN DASAR DAN MENENGAH REPUBLIK INDONESIA
+                    {/* KOP BARIS 1 */}
+                    <div className="text-xs font-bold tracking-wider text-[#B45309] uppercase">
+                      PANITIA WORKSHOP KELOMPOK KERJA KEPALA SEKOLAH KECAMATAN ASEMBAGUS
                     </div>
-                    <div className="font-display text-lg font-bold text-[#1e40af]">
-                      BIMBINGAN TEKNIS DAERAH DIGITALISASI PEMBELAJARAN SD TAHUN 2026
+                    {/* KOP BARIS 2 */}
+                    <div className="font-display text-base md:text-lg font-bold text-[#1e40af] uppercase mt-0.5">
+                      WORKSHOP AKSI PRAKTIS YANG KREATIF DAN INOVATIF BERBASIS DIGITALISASI
                     </div>
                   </div>
                 </div>
 
-                <div className="text-right">
-                  <div className="text-[11px] font-semibold text-slate-500">NOMOR REGISTRASI</div>
+                {/* NOMOR REGISTRASI */}
+                <div className="text-right shrink-0">
+                  <div className="text-[11px] font-semibold text-slate-500 uppercase">NOMOR REGISTRASI</div>
                   <div className="font-mono-num text-xs font-bold text-[#1e40af] bg-[#1e40af]/5 px-2.5 py-1 rounded border border-[#1e40af]/20 mt-0.5">
                     {certId}
                   </div>
@@ -268,16 +284,18 @@ export const CertificateView: React.FC<CertificateViewProps> = ({
 
               {/* Center Certificate Body */}
               <div className="text-center my-auto py-2">
-                <div className="font-display text-3xl md:text-4xl font-bold tracking-wide text-[#1e40af]">
-                  SERTIFIKAT KELULUSAN
+                {/* JUDUL SERTIFIKAT */}
+                <div className="font-display text-3xl md:text-4xl font-bold tracking-wide text-[#1e40af] uppercase">
+                  SERTIFIKAT WORKSHOP
                 </div>
-                <div className="text-xs font-semibold tracking-widest text-[#B45309] mt-1">
-                  DIBERIKAN ATAS PRESTASI DAN KETUNTASAN KEPADA:
+                {/* DIBERIKAN KEPADA */}
+                <div className="text-xs font-semibold tracking-widest text-[#B45309] mt-1.5 uppercase">
+                  DIBERIKAN KEPADA:
                 </div>
 
                 {/* Dynamic Participant Name */}
                 <div
-                  className={`font-display font-bold text-[#0B1B8C] mt-2.5 px-6 py-1.5 border-b-2 border-[#D97706] inline-block max-w-[90%] break-words ${getDynamicNameSizeClass(
+                  className={`font-display font-bold text-[#0B1B8C] mt-2 px-6 py-1.5 border-b-2 border-[#D97706] inline-block max-w-[90%] break-words ${getDynamicNameSizeClass(
                     user.name
                   )}`}
                 >
@@ -290,8 +308,9 @@ export const CertificateView: React.FC<CertificateViewProps> = ({
                   Instansi: <span className="font-bold text-[#1e40af]">{user.instansi}</span>
                 </div>
 
-                <p className="mt-3 max-w-2xl mx-auto text-xs md:text-sm text-slate-700 leading-relaxed">
-                  Telah menuntaskan secara aktif seluruh rangkaian Modul Pelatihan: <strong>Modul 1 (Bahan Ajar Interaktif)</strong>, <strong>Modul 2 (Pembuatan Media Interaktif)</strong>, dan <strong>Modul 3 (Asesmen Berbasis Digital)</strong> serta lulus Kuis Evaluasi per Modul dengan beban belajar setara{' '}
+                {/* PARAGRAF DESKRIPSI KEGIATAN */}
+                <p className="mt-3.5 max-w-2xl mx-auto text-xs md:text-sm text-slate-700 leading-relaxed text-center">
+                  Telah mengikuti kegiatan WORKSHOP AKSI PRAKTIS YANG KREATIF DAN INOVATIF BERBASIS DIGITALISASI di Kecamatan Asembagus secara Aktif dan menyelesaikan Modul Pelatihan serta Lulus Kuis Evaluasi per Modul dengan beban belajar setara{' '}
                   <strong className="text-[#1e40af]">32 Jam Pelajaran (JP)</strong> dengan predikat:
                 </p>
 
@@ -330,48 +349,24 @@ export const CertificateView: React.FC<CertificateViewProps> = ({
                 {/* Center: Gold Foil Emblem */}
                 <div className="flex flex-col items-center justify-center">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-b from-[#F59E0B] to-[#B45309] border-4 border-[#FEF3C7] shadow-md flex flex-col items-center justify-center text-white text-center">
-                    <span className="text-[8px] font-bold tracking-tighter">BIMTEK SD</span>
+                    <span className="text-[7px] font-bold tracking-tighter">KKKS ASEMBAGUS</span>
                     <span className="text-xs font-extrabold font-mono-num">32 JP</span>
                     <span className="text-[7px] tracking-widest">2026</span>
                   </div>
                 </div>
 
-                {/* Right: Digital Signature Narasumber */}
+                {/* Right: Pengesahan Panitia (Tanda tangan grafis telah dihilangkan) */}
                 <div className="text-right">
                   <div className="text-xs text-slate-700">Diterbitkan pada {customDate}</div>
                   <div className="text-xs font-bold text-[#1e40af] mt-0.5">
-                    Fasilitator & Koordinator Teknis Daerah
+                    Ketua Panitia Workshop KKKS Kec. Asembagus
                   </div>
 
-                  {/* Stylized Vector Signature */}
-                  <div className="my-1.5 flex justify-end">
-                    <svg
-                      width="150"
-                      height="42"
-                      viewBox="0 0 180 48"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 36C28 14 42 10 52 28C60 42 74 12 90 18C106 24 98 40 116 32C134 24 148 8 168 22"
-                        stroke="#1e40af"
-                        strokeWidth="2.6"
-                        strokeLinecap="round"
-                      />
-                      <path
-                        d="M28 40C65 34 115 32 162 36"
-                        stroke="#D97706"
-                        strokeWidth="1.6"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                  </div>
+                  {/* Ruang bersih tanda tangan / stempel resmi fisik (tanda tangan grafis ditiadakan) */}
+                  <div className="h-14" />
 
                   <div className="text-xs font-bold text-[#0B1B8C] underline decoration-[#D97706]">
-                    Prof. Dr. H. Hendra Wijaya, M.Pd.
-                  </div>
-                  <div className="text-[10px] text-slate-600 font-mono-num">
-                    NIP. 19740815 199903 1 002
+                    DIANITA SINTASARI, M.Pd
                   </div>
                 </div>
               </div>

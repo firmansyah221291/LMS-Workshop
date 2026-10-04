@@ -1,23 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useMemo } from 'react';
 import {
   Award,
   BookOpen,
   Building2,
-  Camera,
   CheckCircle2,
   ExternalLink,
   GraduationCap,
   Heart,
   IdCard,
+  Lock,
   Mail,
   MapPin,
   MessageSquare,
   Quote,
-  RotateCcw,
   ShieldCheck,
   Sparkles,
   Target,
-  Upload,
   UserCheck,
 } from 'lucide-react';
 import developerPhotoDefault from '../assets/images/achmad_firmansyah_portrait_1791055408919.jpg';
@@ -27,84 +25,14 @@ interface DeveloperInfoViewProps {
 }
 
 export const DeveloperInfoView: React.FC<DeveloperInfoViewProps> = ({ onNavigateLearn }) => {
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [photoUrl, setPhotoUrl] = useState<string>(() => {
+  // Ambil foto yang sekarang aktif (custom photo yang tersimpan atau foto asli resmi)
+  const photoUrl = useMemo<string>(() => {
     try {
       const saved = localStorage.getItem('edupro_developer_photo_original');
       if (saved) return saved;
     } catch {}
     return '/Achmad Firmansyah.png';
-  });
-
-  const [isCustomPhoto, setIsCustomPhoto] = useState<boolean>(() => {
-    try {
-      return Boolean(localStorage.getItem('edupro_developer_photo_original'));
-    } catch {
-      return false;
-    }
-  });
-
-  const [uploadSuccessMessage, setUploadSuccessMessage] = useState<string | null>(null);
-  const [isDragging, setIsDragging] = useState<boolean>(false);
-
-  // Sync with localStorage
-  const handleApplyFile = (file: File) => {
-    if (!file.type.startsWith('image/')) {
-      alert('Harap pilih file gambar (PNG, JPG, atau JPEG).');
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      const dataUrl = e.target?.result as string;
-      if (dataUrl) {
-        setPhotoUrl(dataUrl);
-        setIsCustomPhoto(true);
-        try {
-          localStorage.setItem('edupro_developer_photo_original', dataUrl);
-        } catch {}
-
-        // Persist to server backend if running
-        try {
-          await fetch('/api/upload-photo', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ dataUrl }),
-          });
-        } catch {}
-
-        setUploadSuccessMessage('✓ Foto asli pengembang berhasil dipasang (asli tanpa diedit/AI)!');
-        setTimeout(() => setUploadSuccessMessage(null), 5000);
-      }
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      handleApplyFile(file);
-    }
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    const file = e.dataTransfer.files?.[0];
-    if (file) {
-      handleApplyFile(file);
-    }
-  };
-
-  const handleResetPhoto = () => {
-    try {
-      localStorage.removeItem('edupro_developer_photo_original');
-    } catch {}
-    setPhotoUrl('/Achmad Firmansyah.png');
-    setIsCustomPhoto(false);
-    setUploadSuccessMessage('Foto direset ke file bawaan.');
-    setTimeout(() => setUploadSuccessMessage(null), 3000);
-  };
+  }, []);
 
   return (
     <div className="space-y-8 animate-fadeIn">
@@ -115,18 +43,10 @@ export const DeveloperInfoView: React.FC<DeveloperInfoViewProps> = ({ onNavigate
         <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-[#F95716]/20 rounded-full blur-2xl pointer-events-none" />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-          {/* Foto Pengembang Asli */}
+          {/* Foto Pengembang Asli — DIKUNCI PERMANEN */}
           <div className="lg:col-span-4 flex flex-col items-center">
             {/* The exact selector-targeted container */}
-            <div
-              className={`relative group ${isDragging ? 'ring-4 ring-[#C6F63D]' : ''}`}
-              onDragOver={(e) => {
-                e.preventDefault();
-                setIsDragging(true);
-              }}
-              onDragLeave={() => setIsDragging(false)}
-              onDrop={handleDrop}
-            >
+            <div className="relative">
               <div className="w-56 sm:w-64 aspect-[3/4] rounded-3xl overflow-hidden border-4 border-[#0B1B8C] shadow-2xl bg-red-600 relative">
                 <img
                   src={photoUrl}
@@ -139,17 +59,13 @@ export const DeveloperInfoView: React.FC<DeveloperInfoViewProps> = ({ onNavigate
                   }}
                   alt="Achmad Firmansyah - Pengembang EduPro PWA"
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover object-center"
                 />
 
-                {/* Overlay hover upload button */}
-                <div
-                  onClick={() => fileInputRef.current?.click()}
-                  className="absolute inset-0 bg-[#0B1B8C]/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white cursor-pointer p-3 text-center"
-                >
-                  <Camera className="w-8 h-8 text-[#C6F63D] mb-1" />
-                  <span className="text-xs font-bold">Ganti dengan File Foto Asli</span>
-                  <span className="text-[10px] text-white/80">(Achmad Firmansyah.png)</span>
+                {/* Permanent Locked Badge Overlay */}
+                <div className="absolute top-3 left-3 bg-[#0B1B8C]/90 backdrop-blur-sm text-[#C6F63D] border border-[#C6F63D]/60 rounded-xl px-2.5 py-1 flex items-center gap-1.5 shadow-lg text-[11px] font-bold">
+                  <Lock className="w-3.5 h-3.5 text-[#C6F63D]" />
+                  <span>Foto Terkunci</span>
                 </div>
               </div>
 
@@ -160,47 +76,23 @@ export const DeveloperInfoView: React.FC<DeveloperInfoViewProps> = ({ onNavigate
               </div>
             </div>
 
-            {/* Hidden native file input */}
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="hidden"
-            />
-
-            {/* Tombol Khusus Pasang Foto Asli Upload */}
+            {/* Keterangan Proteksi Foto Terkunci (Anti-Ganti oleh User Lain) */}
             <div className="mt-5 w-full max-w-xs space-y-2 text-center">
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="w-full px-4 py-2.5 rounded-2xl bg-[#C6F63D] border-2 border-[#0B1B8C] text-[#0B1B8C] text-xs font-extrabold hover:brightness-105 active:scale-[0.98] transition cursor-pointer flex items-center justify-center gap-2 shadow-sm"
-              >
-                <Upload className="w-4 h-4 text-[#F95716]" />
-                <span>Pilih / Pasang File Foto Asli</span>
-              </button>
-
-              {isCustomPhoto && (
-                <button
-                  type="button"
-                  onClick={handleResetPhoto}
-                  className="text-[11px] text-slate-500 hover:text-[#0B1B8C] underline flex items-center justify-center gap-1 mx-auto cursor-pointer"
-                >
-                  <RotateCcw className="w-3 h-3" />
-                  <span>Kembalikan ke Foto Awal</span>
-                </button>
-              )}
-
-              {uploadSuccessMessage && (
-                <div className="bg-[#95E18D] border border-[#0B1B8C] rounded-xl px-3 py-1.5 text-xs font-bold text-[#0B1B8C] animate-fadeIn">
-                  {uploadSuccessMessage}
+              <div className="bg-white/90 border-2 border-[#0B1B8C] rounded-2xl p-3.5 shadow-sm text-left">
+                <div className="flex items-center gap-2 text-xs font-extrabold text-[#0B1B8C]">
+                  <div className="w-6 h-6 rounded-lg bg-[#0B1B8C] text-[#C6F63D] flex items-center justify-center shrink-0">
+                    <Lock className="w-3.5 h-3.5" />
+                  </div>
+                  <span>Foto Pengembang Resmi Dikunci</span>
                 </div>
-              )}
+                <p className="text-[11px] text-slate-600 mt-1.5 leading-relaxed">
+                  Foto pengembang resmi (Achmad Firmansyah) telah dipatenkan dan dikunci permanen oleh sistem. Opsi pergantian foto dinonaktifkan sehingga tidak dapat diganti atau diedit oleh pengguna lain.
+                </p>
+              </div>
 
-              <div className="text-[11px] font-semibold text-slate-500">
-                {isCustomPhoto
-                  ? '✓ File foto asli tersimpan & terpasang'
-                  : 'Klik tombol di atas untuk memilih foto asli "Achmad Firmansyah.png"'}
+              <div className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#0B1B8C]">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Identitas & Foto Pengembang Terverifikasi</span>
               </div>
             </div>
           </div>
@@ -228,9 +120,10 @@ export const DeveloperInfoView: React.FC<DeveloperInfoViewProps> = ({ onNavigate
                 </div>
                 <div className="min-w-0">
                   <div className="text-[11px] font-bold text-slate-500 uppercase">Nomor Induk Pegawai (NIP)</div>
-                  <div className="font-mono-num font-bold text-sm text-[#0B1B8C] break-all">
+                  <div className="font-mono-num font-bold text-sm sm:text-base text-[#0B1B8C] tracking-tight">
                     199112222017081001
                   </div>
+                  <div className="text-[10px] text-slate-500 mt-0.5">Pegawai Negeri Sipil Kemendikbudristek</div>
                 </div>
               </div>
 
@@ -239,142 +132,262 @@ export const DeveloperInfoView: React.FC<DeveloperInfoViewProps> = ({ onNavigate
                   <Building2 className="w-5 h-5 text-[#C6F63D]" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-[11px] font-bold text-slate-500 uppercase">Unit Kerja / Satuan Pendidikan</div>
-                  <div className="font-bold text-sm text-[#0B1B8C]">
+                  <div className="text-[11px] font-bold text-slate-500 uppercase">Unit Kerja / Instansi</div>
+                  <div className="font-bold text-sm sm:text-base text-[#0B1B8C] leading-snug">
                     SD Negeri 2 Mojosari
                   </div>
-                  <div className="text-xs text-slate-600 mt-0.5">
-                    Kecamatan Asembagus, Kabupaten Situbondo
+                  <div className="text-[10px] text-slate-600 mt-0.5 flex items-center gap-1">
+                    <MapPin className="w-3 h-3 text-[#F95716] shrink-0" />
+                    <span>Kec. Asembagus, Kab. Situbondo</span>
                   </div>
                 </div>
               </div>
 
               <div className="bg-white border-2 border-[#0B1B8C] rounded-2xl p-4 flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#0B1B8C] text-[#C6F63D] flex items-center justify-center shrink-0 border border-[#0B1B8C]">
-                  <Mail className="w-5 h-5" />
+                <div className="w-10 h-10 rounded-xl bg-[#5B6CFA] text-white flex items-center justify-center shrink-0 border border-[#0B1B8C]">
+                  <Mail className="w-5 h-5 text-[#C6F63D]" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-[11px] font-bold text-slate-500 uppercase">Surel Belajar.id Resmi</div>
-                  <div className="font-semibold text-xs text-[#0B1B8C] break-all">
+                  <div className="text-[11px] font-bold text-slate-500 uppercase">Akun Belajar.id Resmi</div>
+                  <div className="font-mono-num font-bold text-xs sm:text-sm text-[#0B1B8C] break-all">
                     achmadfirmansyah221@guru.sd.belajar.id
                   </div>
+                  <div className="text-[10px] text-slate-500 mt-0.5">Google Workspace for Education</div>
                 </div>
               </div>
 
               <div className="bg-white border-2 border-[#0B1B8C] rounded-2xl p-4 flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#C6F63D] text-[#0B1B8C] flex items-center justify-center shrink-0 border border-[#0B1B8C]">
-                  <MapPin className="w-5 h-5 text-[#F95716]" />
+                <div className="w-10 h-10 rounded-xl bg-[#0B1B8C] text-white flex items-center justify-center shrink-0 border border-[#0B1B8C]">
+                  <Award className="w-5 h-5 text-[#C6F63D]" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-[11px] font-bold text-slate-500 uppercase">Wilayah Pengabdian</div>
-                  <div className="font-bold text-sm text-[#0B1B8C]">
-                    Kabupaten Situbondo, Jawa Timur
+                  <div className="text-[11px] font-bold text-slate-500 uppercase">Peran & Keahlian</div>
+                  <div className="font-bold text-xs sm:text-sm text-[#0B1B8C]">
+                    Narasumber & Pengembang LMS
                   </div>
-                  <div className="text-xs text-slate-600 mt-0.5">
-                    Komunitas Belajar Guru SD Digital
-                  </div>
+                  <div className="text-[10px] text-slate-500 mt-0.5">Bimtek Digitalisasi Pembelajaran 2026</div>
                 </div>
               </div>
             </div>
 
-            {/* Quick Action */}
-            <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3">
-              <button
-                onClick={onNavigateLearn}
-                className="px-6 py-3 rounded-2xl bg-[#0B1B8C] text-[#C6F63D] font-extrabold text-sm border-2 border-[#0B1B8C] hover:bg-[#1e40af] transition cursor-pointer flex items-center gap-2 shadow-md"
-              >
-                <BookOpen className="w-4 h-4" />
-                <span>Buka Ruang Belajar (3 Modul)</span>
-              </button>
+            {/* Kutipan Moto Pengembang */}
+            <div className="bg-[#C6F63D]/40 border-2 border-[#0B1B8C] rounded-2xl p-4 flex items-start gap-3">
+              <Quote className="w-6 h-6 text-[#F95716] shrink-0 rotate-180" />
+              <div>
+                <div className="text-[11px] font-extrabold uppercase text-[#0B1B8C] tracking-wide">
+                  Moto Pengembang Bimtek:
+                </div>
+                <div className="text-xs sm:text-sm font-bold text-slate-900 italic mt-0.5 leading-relaxed">
+                  "Teknologi bukan pengganti guru hebat, tetapi teknologi di tangan guru hebat akan menciptakan transformasi dan masa depan generasi bangsa."
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* MOTO WORKSHOP DIGITALISASI PEMBELAJARAN */}
-      <div className="bg-gradient-to-r from-[#0B1B8C] via-[#1e40af] to-[#5B6CFA] border-3 border-[#0B1B8C] rounded-[32px] p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
-        <div className="max-w-4xl mx-auto text-center space-y-3 relative z-10">
-          <div className="inline-flex items-center gap-2 bg-[#C6F63D] text-[#0B1B8C] px-4 py-1.5 rounded-xl text-xs font-extrabold">
-            <Quote className="w-4 h-4 text-[#F95716]" />
-            <span>MOTO LMS WORKSHOP DIGITALISASI PEMBELAJARAN</span>
-          </div>
-
-          <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-[#C6F63D] leading-tight">
-            “Bukan Sekadar Keren Tapi Tepat Sasaran: Bergerak Bersama, Menginspirasi dengan Aksi Nyata, Menjadikan Setiap Murid Berdaya di Era Digital.”
-          </h3>
-
-          <p className="text-xs sm:text-sm text-white/90 max-w-2xl mx-auto leading-relaxed pt-1">
-            Teknologi di tangan guru yang berdedikasi adalah jembatan emas menuju pengalaman belajar yang bermakna, mendalam, dan membahagiakan murid sekolah dasar.
-          </p>
-        </div>
-      </div>
-
-      {/* VISI & MISI APLIKASI (DIHASILKAN SECARA OTOMATIS OLEH AI) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-        {/* VISI */}
-        <div className="lg:col-span-5 bg-[#C6F63D] border-3 border-[#0B1B8C] rounded-[32px] p-6 sm:p-8 text-[#0B1B8C] shadow-xl flex flex-col justify-between">
-          <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 bg-[#0B1B8C] text-[#C6F63D] px-3.5 py-1.5 rounded-xl text-xs font-extrabold tracking-wider">
-              <Target className="w-4 h-4 text-[#F95716]" />
-              <span>VISI APLIKASI EDUPRO PWA</span>
+      {/* Grid: Visi, Misi, dan Moto Aplikasi (AI Generated) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Visi Aplikasi */}
+        <div className="bg-white border-3 border-[#0B1B8C] rounded-3xl p-6 sm:p-7 shadow-xl space-y-3 relative overflow-hidden flex flex-col justify-between">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-[#5B6CFA]/15 rounded-full -mr-8 -mt-8 pointer-events-none" />
+          <div>
+            <div className="w-12 h-12 rounded-2xl bg-[#5B6CFA] text-white flex items-center justify-center border-2 border-[#0B1B8C] shadow-sm mb-4">
+              <Target className="w-6 h-6 text-[#C6F63D]" />
             </div>
-
-            <h3 className="font-display text-2xl sm:text-3xl font-bold leading-snug">
-              Mewujudkan Ekosistem Pembelajaran Digital SD yang Inklusif, Interaktif, dan Berpusat pada Murid
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#5B6CFA]/10 text-[#0B1B8C] text-[11px] font-extrabold uppercase tracking-wider mb-2">
+              <Sparkles className="w-3.5 h-3.5 text-[#F95716]" />
+              <span>Visi Aplikasi EduPro</span>
+            </div>
+            <h3 className="font-display text-xl font-bold text-[#0B1B8C] leading-snug">
+              Mewujudkan Pembelajaran Dasar yang Adaptif, Interaktif, dan Berpusat pada Murid
             </h3>
+            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed mt-3">
+              Menjadi wadah digitalisasi terdepan bagi seluruh pendidik jenjang Sekolah Dasar dalam menguasai teknologi pembelajaran interaktif, membangun ekosistem kelas yang kreatif, dan mewujudkan merdeka belajar berlandaskan Profil Pelajar Pancasila.
+            </p>
+          </div>
+          <div className="pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-bold text-slate-500">
+            <CheckCircle2 className="w-4 h-4 text-[#95E18D]" />
+            <span>Terintegrasi Kurikulum Nasional</span>
+          </div>
+        </div>
 
-            <p className="text-sm leading-relaxed text-[#0B1B8C]/90 font-medium">
-              Aplikasi EduPro PWA dirancang untuk mendemokratisasi akses pelatihan mandiri berkualitas tinggi bagi seluruh pendidik sekolah dasar di Indonesia—dari perkotaan hingga pelosok daerah—sehingga setiap guru mampu menjadi arsitek pembelajaran digital yang adaptif, reflektif, dan berdampak nyata bagi murid.
+        {/* Misi Aplikasi */}
+        <div className="bg-white border-3 border-[#0B1B8C] rounded-3xl p-6 sm:p-7 shadow-xl space-y-3 relative overflow-hidden flex flex-col justify-between">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-[#F95716]/15 rounded-full -mr-8 -mt-8 pointer-events-none" />
+          <div>
+            <div className="w-12 h-12 rounded-2xl bg-[#F95716] text-white flex items-center justify-center border-2 border-[#0B1B8C] shadow-sm mb-4">
+              <GraduationCap className="w-6 h-6 text-[#C6F63D]" />
+            </div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#F95716]/10 text-[#F95716] text-[11px] font-extrabold uppercase tracking-wider mb-2">
+              <Sparkles className="w-3.5 h-3.5 text-[#0B1B8C]" />
+              <span>Misi Aplikasi EduPro</span>
+            </div>
+            <h3 className="font-display text-xl font-bold text-[#0B1B8C] leading-snug">
+              Tridarma Penguatan Kapasitas Guru Digital
+            </h3>
+            <ul className="text-xs sm:text-sm text-slate-700 space-y-2 mt-3 list-none">
+              <li className="flex items-start gap-2">
+                <div className="w-4 h-4 rounded-full bg-[#C6F63D] text-[#0B1B8C] flex items-center justify-center shrink-0 mt-0.5 font-bold text-[10px] border border-[#0B1B8C]">
+                  1
+                </div>
+                <span><strong>Akses Materi Terstruktur:</strong> Menyediakan 30 modul pembelajaran interaktif berbobot HOTS.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-4 h-4 rounded-full bg-[#C6F63D] text-[#0B1B8C] flex items-center justify-center shrink-0 mt-0.5 font-bold text-[10px] border border-[#0B1B8C]">
+                  2
+                </div>
+                <span><strong>Refleksi & Evaluasi Mandiri:</strong> Melatih penalaran kritis guru melalui refleksi aksi nyata per materi.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-4 h-4 rounded-full bg-[#C6F63D] text-[#0B1B8C] flex items-center justify-center shrink-0 mt-0.5 font-bold text-[10px] border border-[#0B1B8C]">
+                  3
+                </div>
+                <span><strong>Sertifikasi Kredibel:</strong> Otomasi penilaian kuis dengan ambang batas kelulusan 80% dan sertifikat instan ber-QR Code.</span>
+              </li>
+            </ul>
+          </div>
+          <div className="pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-bold text-slate-500">
+            <CheckCircle2 className="w-4 h-4 text-[#95E18D]" />
+            <span>Standar Bimtek 32 Jam Pelajaran (JP)</span>
+          </div>
+        </div>
+
+        {/* Moto Bimtek Digitalisasi */}
+        <div className="bg-white border-3 border-[#0B1B8C] rounded-3xl p-6 sm:p-7 shadow-xl space-y-3 relative overflow-hidden flex flex-col justify-between">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-[#C6F63D]/25 rounded-full -mr-8 -mt-8 pointer-events-none" />
+          <div>
+            <div className="w-12 h-12 rounded-2xl bg-[#0B1B8C] text-white flex items-center justify-center border-2 border-[#0B1B8C] shadow-sm mb-4">
+              <Heart className="w-6 h-6 text-[#C6F63D]" />
+            </div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#C6F63D]/30 text-[#0B1B8C] text-[11px] font-extrabold uppercase tracking-wider mb-2">
+              <Sparkles className="w-3.5 h-3.5 text-[#F95716]" />
+              <span>Moto LMS Workshop</span>
+            </div>
+            <h3 className="font-display text-xl font-bold text-[#0B1B8C] leading-snug">
+              "Tergerak Berinovasi, Bergerak Berkolaborasi, Menggerakkan Mutu Generasi"
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed mt-3">
+              Semangat digitalisasi bukan tentang kecanggihan gawai, melainkan tentang ketulusan hati guru dalam menghadirkan pengalaman belajar yang bermakna bagi setiap anak didik di penjuru nusantara.
+            </p>
+          </div>
+          <div className="pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-bold text-slate-500">
+            <CheckCircle2 className="w-4 h-4 text-[#95E18D]" />
+            <span>Semangat Komunitas Belajar Guru SD</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Bagian Portofolio & Pilar Kompetensi Pengembang */}
+      <div className="bg-[#FAF3E0] border-3 border-[#0B1B8C] rounded-[36px] p-6 sm:p-10 shadow-xl space-y-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-[#0B1B8C]/15 pb-5">
+          <div>
+            <div className="text-xs font-extrabold uppercase tracking-wider text-[#F95716]">
+              Portofolio & Pilar Inovasi Pengembang
+            </div>
+            <h3 className="font-display text-2xl sm:text-3xl font-bold text-[#0B1B8C]">
+              5 Pilar Digitalisasi Pembelajaran SD yang Diusung
+            </h3>
+          </div>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#0B1B8C] text-[#C6F63D] text-xs font-bold font-mono-num self-start md:self-auto border border-[#0B1B8C]">
+            <ShieldCheck className="w-4 h-4 text-[#C6F63D]" />
+            <span>Fasilitator Bimtek Tersertifikasi</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-white border-2 border-[#0B1B8C] rounded-2xl p-4 space-y-2">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-[#5B6CFA] text-white flex items-center justify-center font-bold text-xs">
+                1
+              </div>
+              <h4 className="font-display text-base font-bold text-[#0B1B8C]">
+                Optimalisasi Perangkat Papan Interaktif (IFP)
+              </h4>
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed pl-10.5">
+              Mengintegrasikan layar sentuh besar dan Chromebook untuk pembelajaran kolaboratif multisensori siswa kelas awal maupun kelas tinggi di SD.
             </p>
           </div>
 
-          <div className="mt-6 pt-4 border-t-2 border-[#0B1B8C]/20 flex items-center justify-between text-xs font-extrabold">
-            <span>Bimtek SD 2026</span>
-            <span>Standar Nasional PMM & Kurikulum Merdeka</span>
+          <div className="bg-white border-2 border-[#0B1B8C] rounded-2xl p-4 space-y-2">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-[#F95716] text-white flex items-center justify-center font-bold text-xs">
+                2
+              </div>
+              <h4 className="font-display text-base font-bold text-[#0B1B8C]">
+                Pemanfaatan AI Generatif untuk Guru SD
+              </h4>
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed pl-10.5">
+              Memandu guru menyusun Modul Ajar berdiferensiasi, instrumen asesmen diagnostik, rubrik penilaian, dan bahan tayang presentasi interaktif menggunakan prompt engineering terstruktur.
+            </p>
+          </div>
+
+          <div className="bg-white border-2 border-[#0B1B8C] rounded-2xl p-4 space-y-2">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-[#0B1B8C] text-white flex items-center justify-center font-bold text-xs">
+                3
+              </div>
+              <h4 className="font-display text-base font-bold text-[#0B1B8C]">
+                Gamifikasi & Evaluasi Formatif Digital
+              </h4>
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed pl-10.5">
+              Implementasi Quizizz Paper Mode, Wordwall interaktif, dan Google Workspace yang ramah gawai untuk meningkatkan antusiasme belajar siswa di kelas.
+            </p>
+          </div>
+
+          <div className="bg-white border-2 border-[#0B1B8C] rounded-2xl p-4 space-y-2">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-[#C6F63D] text-[#0B1B8C] flex items-center justify-center font-bold text-xs border border-[#0B1B8C]">
+                4
+              </div>
+              <h4 className="font-display text-base font-bold text-[#0B1B8C]">
+                Arsitektur Aplikasi Progressive Web App (PWA)
+              </h4>
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed pl-10.5">
+              Merancang sistem LMS ringan yang dapat diinstal langsung di smartphone guru tanpa Play Store, hemat kuota internet, dan mendukung pembelajaran luring berkat service worker.
+            </p>
           </div>
         </div>
 
-        {/* MISI */}
-        <div className="lg:col-span-7 bg-[#FBF7EC] border-3 border-[#0B1B8C] rounded-[32px] p-6 sm:p-8 text-[#0B1B8C] shadow-xl space-y-4">
-          <div className="inline-flex items-center gap-2 bg-[#F95716] text-white px-3.5 py-1.5 rounded-xl text-xs font-extrabold tracking-wider">
-            <GraduationCap className="w-4 h-4 text-[#C6F63D]" />
-            <span>5 MISI UTAMA PENGEMBANGAN APLIKASI</span>
-          </div>
-
-          <h3 className="font-display text-xl sm:text-2xl font-bold">
-            Pilar Strategis Peningkatan Mutu Guru SD
-          </h3>
-
-          <div className="space-y-3">
+        {/* Rekomendasi Alur Pembelajaran bagi Peserta */}
+        <div className="pt-4 border-t-2 border-[#0B1B8C]/15">
+          <h4 className="text-xs font-extrabold uppercase text-[#0B1B8C] tracking-wider mb-3">
+            Pesan Pengembang untuk Peserta Workshop:
+          </h4>
+          <div className="space-y-2.5">
             <div className="bg-white border-2 border-[#0B1B8C] rounded-2xl p-3.5 flex items-start gap-3">
-              <div className="w-7 h-7 rounded-xl bg-[#5B6CFA] text-white font-mono-num font-bold text-xs flex items-center justify-center shrink-0 border border-[#0B1B8C]">
+              <div className="w-7 h-7 rounded-xl bg-[#0B1B8C] text-[#C6F63D] font-mono-num font-bold text-xs flex items-center justify-center shrink-0 border border-[#0B1B8C]">
                 1
               </div>
               <div className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                <strong className="text-[#0B1B8C]">Transformasi Pedagogis Dua Arah:</strong> Mengalihkan kebiasaan presentasi satu arah menuju bahan ajar interaktif yang menuntut aksi, respon langsung, dan alur eksplorasi mandiri murid.
+                <strong className="text-[#0B1B8C]">Belajar Bertahap & Tuntas:</strong> Pelajari setiap modul secara runut mulai dari Modul 1 (Bahan Ajar Interaktif), Modul 2 (Pengembangan Media), hingga Modul 3 (Asesmen Digital).
               </div>
             </div>
 
             <div className="bg-white border-2 border-[#0B1B8C] rounded-2xl p-3.5 flex items-start gap-3">
-              <div className="w-7 h-7 rounded-xl bg-[#95E18D] text-[#0B1B8C] font-mono-num font-bold text-xs flex items-center justify-center shrink-0 border border-[#0B1B8C]">
+              <div className="w-7 h-7 rounded-xl bg-[#0B1B8C] text-[#C6F63D] font-mono-num font-bold text-xs flex items-center justify-center shrink-0 border border-[#0B1B8C]">
                 2
               </div>
               <div className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                <strong className="text-[#0B1B8C]">Aksesibilitas Tanpa Sekat (PWA):</strong> Memastikan seluruh materi dan kuis dapat diakses secara luring maupun daring melalui gawai HP maupun laptop tanpa perlu mengunduh file berat dari toko aplikasi.
+                <strong className="text-[#0B1B8C]">Tulis Refleksi Aksi Nyata Guru:</strong> Setiap materi menuntut refleksi tertulis dari pengalaman nyata Bapak/Ibu guru di sekolah masing-masing untuk membuka materi selanjutnya.
               </div>
             </div>
 
             <div className="bg-white border-2 border-[#0B1B8C] rounded-2xl p-3.5 flex items-start gap-3">
-              <div className="w-7 h-7 rounded-xl bg-[#F95716] text-white font-mono-num font-bold text-xs flex items-center justify-center shrink-0 border border-[#0B1B8C]">
+              <div className="w-7 h-7 rounded-xl bg-[#0B1B8C] text-[#C6F63D] font-mono-num font-bold text-xs flex items-center justify-center shrink-0 border border-[#0B1B8C]">
                 3
               </div>
               <div className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                <strong className="text-[#0B1B8C]">Optimalisasi Papan Interaktif Digital & Canva AI:</strong> Memberikan panduan praktis siap pakai bagi guru untuk mendayagunakan perangkat layar sentuh kelas dan teknologi kecerdasan buatan.
+                <strong className="text-[#0B1B8C]">Selesaikan Kuis Kelulusan:</strong> Uji pemahaman Anda dengan mengerjakan 5 soal kuis per modul. Ambang batas kelulusan kuis adalah 80%.
               </div>
             </div>
 
             <div className="bg-white border-2 border-[#0B1B8C] rounded-2xl p-3.5 flex items-start gap-3">
-              <div className="w-7 h-7 rounded-xl bg-[#C6F63D] text-[#0B1B8C] font-mono-num font-bold text-xs flex items-center justify-center shrink-0 border border-[#0B1B8C]">
+              <div className="w-7 h-7 rounded-xl bg-[#0B1B8C] text-[#C6F63D] font-mono-num font-bold text-xs flex items-center justify-center shrink-0 border border-[#0B1B8C]">
                 4
               </div>
               <div className="text-xs sm:text-sm text-slate-700 leading-relaxed">
