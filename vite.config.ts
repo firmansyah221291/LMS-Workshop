@@ -1,9 +1,13 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { defineConfig, Plugin } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 function photoUploadPlugin(): Plugin {
   return {
@@ -23,10 +27,13 @@ function photoUploadPlugin(): Plugin {
                 const buffer = Buffer.from(base64Data, 'base64');
                 fs.writeFileSync(path.resolve(__dirname, 'public/Achmad Firmansyah.png'), buffer);
                 fs.writeFileSync(path.resolve(__dirname, 'public/achmad_firmansyah.jpg'), buffer);
-                fs.writeFileSync(
-                  path.resolve(__dirname, 'src/assets/images/achmad_firmansyah_portrait_1791055408919.jpg'),
-                  buffer
-                );
+                const assetDir = path.resolve(__dirname, 'src/assets/images');
+                if (fs.existsSync(assetDir)) {
+                  fs.writeFileSync(
+                    path.resolve(assetDir, 'achmad_firmansyah_portrait_1791055408919.jpg'),
+                    buffer
+                  );
+                }
               }
               res.setHeader('Content-Type', 'application/json');
               res.end(JSON.stringify({ success: true, message: 'Foto asli pengembang berhasil disimpan di server' }));
@@ -96,6 +103,27 @@ export default defineConfig(() => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
+      },
+    },
+    build: {
+      outDir: 'dist',
+      chunkSizeWarningLimit: 1600,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('jspdf') || id.includes('html2canvas')) {
+                return 'vendor-pdf';
+              }
+              if (id.includes('lucide-react')) {
+                return 'vendor-icons';
+              }
+              if (id.includes('react')) {
+                return 'vendor-react';
+              }
+            }
+          },
+        },
       },
     },
     server: {

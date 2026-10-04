@@ -1,0 +1,6 @@
+# Vercel Ignore
+node_modules
+dev-dist
+.git
+.env*.local
+README.md
