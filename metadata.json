@@ -1,0 +1,8 @@
+{
+  "name": "EduPro PWA LMS",
+  "description": "A mobile-friendly PWA for teachers featuring interactive modules, automated quizzes, and instant PDF certificate generation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

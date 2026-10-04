@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "EduPro PWA LMS — Bimtek Digitalisasi Pembelajaran SD",
+  "short_name": "EduPro",
+  "description": "Aplikasi LMS PWA untuk Bimtek Digitalisasi Pembelajaran SD 2026: Modul 1, Modul 2, Modul 3, Kuis per Modul, dan Sertifikat Digital.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#5B6CFA",
+  "theme_color": "#1e40af",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
