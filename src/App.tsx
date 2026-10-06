@@ -209,26 +209,25 @@ export default function App() {
   };
 
   const isLessonFinished = (lessonId: string): boolean => {
-    return completedLessons.includes(lessonId) && isLessonReflectionFilled(lessonId);
+    return isLessonReflectionFilled(lessonId);
   };
 
-  const isLessonUnlocked = (globalIndex: number): boolean => {
-    if (globalIndex === 0) return true;
-    const prev = ALL_LESSONS[globalIndex - 1];
-    if (!prev) return false;
-    return isLessonFinished(prev.id);
+  const isLessonUnlocked = (_globalIndex: number): boolean => {
+    // Seluruh materi modul terbuka bebas agar peserta dapat belajar secara fleksibel
+    return true;
   };
 
   const getModuleFinishedCount = (moduleId: number): number => {
     const mod = LMS_MODULES.find((m) => m.id === moduleId);
     if (!mod) return 0;
-    return mod.lessons.filter((l) => isLessonFinished(l.id)).length;
+    return mod.lessons.filter((l) => isLessonReflectionFilled(l.id)).length;
   };
 
   const isModuleQuizUnlocked = (moduleId: number): boolean => {
     const mod = LMS_MODULES.find((m) => m.id === moduleId);
     if (!mod) return false;
-    return mod.lessons.every((l) => isLessonFinished(l.id));
+    // Kuis modul terbuka jika seluruh materi di modul ini (10 materi) telah dijawab refleksinya
+    return mod.lessons.every((l) => isLessonReflectionFilled(l.id));
   };
 
   const currentModule = useMemo(
@@ -312,7 +311,7 @@ export default function App() {
     const currentRefl = (reflections[lessonId] || '').trim();
     if (!currentRefl) {
       setReflectionError(
-        '⚠️ Refleksi Guru wajib diisi! Mohon tuliskan refleksi pembelajaran Anda pada kolom di bawah terlebih dahulu sebelum menandai materi selesai dan membuka materi berikutnya.'
+        '⚠️ Refleksi Guru wajib diisi! Mohon tuliskan catatan refleksi pembelajaran Anda pada kolom di bawah terlebih dahulu untuk menuntaskan materi ini dan memenuhi syarat pembuka kuis modul.'
       );
       const reflEl = document.getElementById('teacher-reflection-input');
       if (reflEl) {
@@ -1335,7 +1334,7 @@ export default function App() {
                   </div>
 
                   <p className="text-xs text-slate-600 mb-2">
-                    *Materi selanjutnya akan tetap <strong>terkunci</strong> sampai Anda mengisi catatan refleksi di bawah ini.
+                    *Seluruh materi terbuka bebas dipelajari. Namun, <strong>Kuis Modul {currentModule.code} baru akan terbuka setelah seluruh 10 materi pada modul ini diisi refleksinya</strong>.
                   </p>
 
                   <textarea
@@ -1600,8 +1599,8 @@ export default function App() {
               )}
             </div>
 
-            {/* 3 Module Selector Tabs for Quiz */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {/* 4 Module Selector Tabs for Quiz */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {LMS_MODULES.map((mod) => {
                 const isActive = mod.id === quizActiveModuleId;
                 const score = moduleScores[mod.id];
@@ -1645,7 +1644,7 @@ export default function App() {
                             'Siap Dikerjakan'
                           )
                         ) : (
-                          `${countFinished}/10 Materi`
+                          `${countFinished}/10 Refleksi`
                         )}
                       </span>
                     </div>
@@ -1667,14 +1666,14 @@ export default function App() {
                   Kuis {quizModule.code} Belum Dapat Diakses
                 </h3>
                 <p className="text-sm text-slate-700 max-w-xl mx-auto leading-relaxed">
-                  Sesuai ketentuan Bimtek Digitalisasi Pembelajaran SD, materi nomor 1 sampai nomor 10 pada <strong>{quizModule.code} ({quizModule.title})</strong> wajib diselesaikan secara keseluruhan beserta Refleksi Guru sebelum kuis dapat dibuka.
+                  Seluruh materi modul terbuka bebas untuk dipelajari kapan saja. Namun kuis modul ini baru akan terbuka setelah Anda <strong>menjawab seluruh pertanyaan refleksi pada 10 materi di {quizModule.code} ({quizModule.title})</strong>.
                 </p>
 
                 <div className="max-w-md mx-auto bg-white border-2 border-[#0B1B8C] rounded-2xl p-4 text-left space-y-2">
                   <div className="flex items-center justify-between text-xs font-bold text-[#0B1B8C]">
-                    <span>Status Ketuntasan {quizModule.code}:</span>
+                    <span>Progres Refleksi {quizModule.code}:</span>
                     <span className="font-mono-num text-[#F95716]">
-                      {getModuleFinishedCount(quizModule.id)} / 10 Materi Selesai
+                      {getModuleFinishedCount(quizModule.id)} / 10 Refleksi Terisi
                     </span>
                   </div>
                   <div className="w-full bg-[#FAF3E0] rounded-full h-3.5 border border-[#0B1B8C]/20 overflow-hidden">
@@ -1684,7 +1683,7 @@ export default function App() {
                     />
                   </div>
                   <div className="text-[11px] text-slate-500">
-                    Masih ada {10 - getModuleFinishedCount(quizModule.id)} materi yang belum tuntas dibaca atau belum mengisi Refleksi Guru.
+                    Masih ada {10 - getModuleFinishedCount(quizModule.id)} materi yang refleksinya belum diisi untuk membuka kuis ini.
                   </div>
                 </div>
 
@@ -1700,7 +1699,7 @@ export default function App() {
                     }}
                     className="px-6 py-3 rounded-2xl bg-[#0B1B8C] text-[#C6F63D] border-2 border-[#0B1B8C] font-extrabold text-sm hover:brightness-110 transition cursor-pointer inline-flex items-center gap-2 shadow-md"
                   >
-                    <span>Lanjutkan Membaca Materi {quizModule.code}</span>
+                    <span>Buka Materi & Tulis Refleksi {quizModule.code}</span>
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>

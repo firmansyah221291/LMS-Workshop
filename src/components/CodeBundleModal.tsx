@@ -113,7 +113,7 @@ function jsonResponse(obj) {
       filename: 'app.js',
       title: 'Vanilla JavaScript ES6+ (app.js)',
       subtitle: 'Logika autentikasi, materi per modul, kuis per modul, dan sync Google Sheets',
-      code: `// Terhubung ke Google Apps Script: ${GAS_WEB_APP_URL}\n// Logika kuis per modul (Modul 1, Modul 2, Modul 3) dan klaim sertifikat`,
+      code: `// Terhubung ke Google Apps Script: ${GAS_WEB_APP_URL}\n// Logika kuis per modul (Modul 1 s.d. Modul 4) dan klaim sertifikat`,
     },
     manifest: {
       filename: 'manifest.json',
